@@ -3,29 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>KCC SCHEDULE</title>
+
 <link rel="manifest" href="manifest.json">
+
 <meta name="theme-color" content="#6f9fd1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="KCC 일정">
+
 <link rel="apple-touch-icon" href="icon.png">
+
+
 <style>
-*{box-sizing:border-box;}
+
+*{
+  box-sizing:border-box;
+}
 
 :root{
   --navy:#183f72;
   --blue:#6f9fd1;
   --blue-dark:#557fae;
   --blue-soft:#e1edf8;
+
   --pink:#eeb0c1;
   --pink-soft:#fff0f4;
+
   --orange:#f28a24;
   --orange-soft:#fff1df;
+
   --green:#59a77c;
+
   --text:#263d59;
   --gray:#7d8998;
 }
+
 
 body{
   margin:0;
@@ -33,6 +47,7 @@ body{
   font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;
   color:var(--text);
 }
+
 
 .wrap{
   width:100%;
@@ -43,15 +58,28 @@ body{
   overflow:hidden;
 }
 
-/* HEADER */
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
   position:relative;
   overflow:hidden;
+
   padding:29px 22px 32px;
-  background:linear-gradient(135deg,#7fb5e8,#cfe6fa);
+
+  background:
+    linear-gradient(
+      135deg,
+      #7fb5e8,
+      #cfe6fa
+    );
+
   color:#103f73;
 }
+
 
 .cloud{
   position:absolute;
@@ -59,608 +87,1130 @@ header{
   font-size:32px;
 }
 
-.cloud.one{top:8px;right:20px;}
-.cloud.two{bottom:2px;left:8px;font-size:25px;}
+.cloud.one{
+  top:8px;
+  right:20px;
+}
+
+.cloud.two{
+  bottom:2px;
+  left:8px;
+  font-size:25px;
+}
+
 
 .header-icons{
   position:absolute;
+
   right:22px;
   bottom:17px;
+
   display:flex;
   gap:9px;
+
   font-size:21px;
 }
+
 
 .season{
   position:relative;
   z-index:2;
+
   font-size:11px;
   font-weight:800;
   letter-spacing:2px;
+
   color:#326da8;
 }
+
 
 header h1{
   position:relative;
   z-index:2;
+
   margin:5px 0 2px;
+
   font-size:26px;
   font-weight:950;
   letter-spacing:-1px;
+
   color:#123f73;
 }
+
 
 .header-sub{
   position:relative;
   z-index:2;
+
   margin-top:4px;
+
   font-size:11px;
   font-weight:900;
   letter-spacing:3px;
+
   color:#3977b5;
 }
 
-.content{padding:18px;}
+
+.content{
+  padding:18px;
+}
 
 
-/* NEXT MATCH */
+
+/* =========================
+   NEXT MATCH
+========================= */
 
 .next-label{
   display:inline-flex;
   align-items:center;
   gap:6px;
+
   margin-bottom:8px;
+
   padding:6px 11px;
+
   border-radius:20px;
+
   background:#183f72;
   color:white;
+
   font-size:10px;
   font-weight:900;
   letter-spacing:1px;
 }
 
+
 .next-game{
   position:relative;
   overflow:hidden;
+
   padding:21px;
+
   border-radius:22px;
-  background:linear-gradient(135deg,#335f91,#6f9fd1);
-  box-shadow:0 11px 25px rgba(32,92,157,.18);
+
+  background:
+    linear-gradient(
+      135deg,
+      #335f91,
+      #6f9fd1
+    );
+
+  box-shadow:
+    0 11px 25px rgba(32,92,157,.18);
+
   color:white;
 }
 
+
 .next-game:after{
   content:"🏀";
+
   position:absolute;
+
   right:-5px;
   bottom:-18px;
+
   font-size:78px;
+
   opacity:.12;
+
   transform:rotate(-15deg);
 }
+
 
 .next-top{
   position:relative;
   z-index:2;
+
   display:flex;
+
   justify-content:space-between;
   align-items:center;
 }
 
+
 .dday{
   padding:6px 10px;
+
   border-radius:12px;
+
   background:var(--orange);
+
   color:white;
+
   font-size:13px;
   font-weight:950;
 }
 
+
 .next-badge{
   padding:6px 10px;
+
   border-radius:20px;
+
   background:white;
+
   color:#1762bd;
+
   font-size:9px;
   font-weight:950;
 }
+
 
 .next-badge.away{
   background:#ffe5ed;
   color:#c65b78;
 }
 
+
 .next-badge.open{
   background:var(--orange);
   color:white;
 }
 
+
 .next-teams{
   position:relative;
   z-index:2;
+
   margin-top:17px;
+
   font-size:23px;
   font-weight:950;
 }
 
+
 .next-vs{
   display:inline-block;
+
   margin:0 5px;
+
   color:var(--orange);
+
   font-size:14px;
   font-weight:950;
 }
 
+
 .next-info{
   position:relative;
   z-index:2;
+
   margin-top:10px;
+
   color:#eef5fc;
+
   font-size:12px;
   line-height:1.8;
 }
 
-.category-text{font-weight:900;color:white;}
 
-.category-text.open{
-  display:inline-block;
-  padding:1px 6px;
-  border-radius:7px;
-  background:var(--orange);
+.category-text{
+  font-weight:900;
   color:white;
 }
 
 
-/* MY RECORD */
+.category-text.open{
+  display:inline-block;
+
+  padding:1px 6px;
+
+  border-radius:7px;
+
+  background:var(--orange);
+
+  color:white;
+}
+
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-box{
+  margin-top:18px;
+
+  padding:15px;
+
+  border-radius:18px;
+
+  background:#f4f8fc;
+
+  border:1px solid #dce8f4;
+}
+
+
+.login-title{
+  margin-bottom:10px;
+
+  color:#355776;
+
+  font-size:11px;
+  font-weight:950;
+}
+
+
+.login-box input{
+  width:100%;
+
+  margin-bottom:8px;
+
+  padding:12px 13px;
+
+  border:1px solid #d6e1ec;
+  border-radius:13px;
+
+  outline:none;
+
+  background:white;
+
+  color:#263d59;
+
+  font-size:12px;
+}
+
+
+.login-box input:focus{
+  border-color:#6f9fd1;
+}
+
+
+.login-buttons{
+  display:flex;
+  gap:8px;
+}
+
+
+.login-buttons button{
+  flex:1;
+
+  padding:11px;
+
+  border:0;
+  border-radius:13px;
+
+  background:#6f9fd1;
+
+  color:white;
+
+  font-size:11px;
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+
+.login-buttons .signup-btn{
+  background:#183f72;
+}
+
+
+.logged-in-user{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  color:#355776;
+
+  font-size:12px;
+  font-weight:900;
+}
+
+
+.logged-in-user button{
+  border:0;
+
+  padding:8px 11px;
+
+  border-radius:11px;
+
+  background:#e5edf6;
+
+  color:#55728f;
+
+  font-size:9px;
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+
+#loginMessage{
+  margin-top:8px;
+
+  color:#718196;
+
+  font-size:9px;
+
+  text-align:center;
+}
+
+
+
+/* =========================
+   MY RECORD
+========================= */
 
 .my-record{
   margin-top:18px;
+
   padding:17px;
+
   border-radius:20px;
+
   background:#f7f9fc;
+
   border:1px solid #e5ebf2;
 }
 
+
 .record-title{
   display:flex;
+
   justify-content:space-between;
   align-items:center;
+
   margin-bottom:12px;
 }
 
+
 .record-title strong{
   color:#355776;
+
   font-size:13px;
   font-weight:950;
 }
 
-.record-title span{font-size:18px;}
+
+.record-title span{
+  font-size:18px;
+}
+
 
 .record-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:8px;
 }
 
+
 .record-box{
   padding:12px 5px;
+
   border-radius:15px;
+
   text-align:center;
 }
 
-.record-box.total{background:#e5eff9;}
-.record-box.win{background:#fff1df;}
-.record-box.rate{background:#eaf6ef;}
+
+.record-box.total{
+  background:#e5eff9;
+}
+
+
+.record-box.win{
+  background:#fff1df;
+}
+
+
+.record-box.rate{
+  background:#eaf6ef;
+}
+
 
 .record-number{
   display:block;
+
   font-size:19px;
   font-weight:950;
 }
 
-.record-box.total .record-number{color:#5d86b3;}
-.record-box.win .record-number{color:#e38325;}
-.record-box.rate .record-number{color:#559875;}
+
+.record-box.total .record-number{
+  color:#5d86b3;
+}
+
+
+.record-box.win .record-number{
+  color:#e38325;
+}
+
+
+.record-box.rate .record-number{
+  color:#559875;
+}
+
 
 .record-label{
   display:block;
+
   margin-top:3px;
+
   color:#7f8b98;
+
   font-size:8px;
   font-weight:800;
 }
 
 
-/* KBL RANKING BUTTON */
+
+/* =========================
+   KBL RANKING
+========================= */
 
 .ranking-btn{
   display:flex;
+
   align-items:center;
   justify-content:space-between;
+
   margin-top:10px;
+
   padding:13px 15px;
+
   border:1px solid #d5e2ef;
   border-radius:15px;
+
   background:#edf4fb;
+
   color:#355f8b;
+
   text-decoration:none;
+
   font-size:11px;
   font-weight:900;
-  transition:.15s;
 }
+
 
 .ranking-btn:active{
   transform:scale(.98);
+
   background:#e2edf8;
 }
 
+
 .ranking-left{
   display:flex;
+
   align-items:center;
+
   gap:5px;
 }
 
+
 .ranking-arrow{
   color:var(--orange);
+
   font-size:17px;
   font-weight:950;
 }
 
 
-/* FILTER */
+
+/* =========================
+   FILTER
+========================= */
 
 .filters{
   display:flex;
+
   gap:7px;
+
   margin:22px 0 20px;
 }
 
+
 .filter{
   flex:1;
+
   min-width:0;
+
   padding:9px 4px;
+
   border:2px solid transparent;
   border-radius:18px;
+
   font-size:10px;
   font-weight:950;
+
   cursor:pointer;
 }
 
-.filter-all{background:#edf1f5;color:#667487;}
-.filter-home{background:#dfeaf6;color:#5b84ae;}
-.filter-away{background:#ffe5ed;color:#c75d79;}
-.filter-open{background:#fff0dd;color:#dc7f23;}
 
-.filter-all.active{background:#50647d;color:white;}
+.filter-all{
+  background:#edf1f5;
+  color:#667487;
+}
+
+
+.filter-home{
+  background:#dfeaf6;
+  color:#5b84ae;
+}
+
+
+.filter-away{
+  background:#ffe5ed;
+  color:#c75d79;
+}
+
+
+.filter-open{
+  background:#fff0dd;
+  color:#dc7f23;
+}
+
+
+.filter-all.active{
+  background:#50647d;
+  color:white;
+}
+
 
 .filter-home.active{
   background:var(--blue);
   color:white;
+
   border-color:var(--blue-dark);
 }
+
 
 .filter-away.active{
   background:#e99eb4;
   color:white;
+
   border-color:#d9829b;
 }
+
 
 .filter-open.active{
   background:var(--orange);
   color:white;
+
   border-color:#dc7314;
 }
 
 
-/* MONTH */
+
+/* =========================
+   MONTH
+========================= */
 
 .month-nav{
   display:flex;
+
   justify-content:space-between;
   align-items:center;
+
   margin:5px 2px 14px;
 }
+
 
 .month-nav button{
   width:38px;
   height:38px;
+
   border:0;
+
   border-radius:50%;
+
   background:#e8f2ff;
+
   color:#276db9;
+
   font-size:23px;
   font-weight:bold;
+
   cursor:pointer;
 }
 
+
 .month-title{
   color:#194d85;
+
   font-size:22px;
   font-weight:950;
+
   text-align:center;
 }
 
+
 .month-title small{
   display:block;
+
   margin-top:2px;
+
   color:#8c9bad;
+
   font-size:9px;
   font-weight:800;
   letter-spacing:2px;
 }
 
 
-/* CALENDAR */
+
+/* =========================
+   CALENDAR
+========================= */
 
 .calendar{
   display:grid;
-  grid-template-columns:repeat(7,1fr);
+
+  grid-template-columns:
+    repeat(7,1fr);
+
   gap:4px;
 }
 
+
 .day-name{
   display:flex;
+
   height:29px;
+
   align-items:center;
   justify-content:center;
+
   color:#8a96a5;
+
   font-size:9px;
   font-weight:900;
 }
 
-.day-name.sun{color:#e36e8b;}
-.day-name.sat{color:#3175c5;}
+
+.day-name.sun{
+  color:#e36e8b;
+}
+
+
+.day-name.sat{
+  color:#3175c5;
+}
+
 
 .day{
   position:relative;
+
   min-width:0;
+
   height:72px;
+
   padding:5px 4px;
+
   border-radius:11px;
+
   background:#f7f9fb;
+
   color:#68788c;
+
   font-size:10px;
 }
 
-.day.empty{background:transparent;}
-.day.sun{color:#d96a84;}
-.day.sat{color:#2870c5;}
+
+.day.empty{
+  background:transparent;
+}
+
+
+.day.sun{
+  color:#d96a84;
+}
+
+
+.day.sat{
+  color:#2870c5;
+}
+
 
 .game-day{
   cursor:pointer;
+
   font-weight:950;
 }
+
+
 
 /* HOME */
 
 .game-day.home{
   background:var(--blue);
+
   color:white;
-  box-shadow:inset 0 0 0 1px var(--blue-dark);
+
+  box-shadow:
+    inset 0 0 0 1px var(--blue-dark);
 }
+
 
 .game-day.home .game-team,
 .game-day.home .game-time{
   color:white;
 }
 
+
+
 /* AWAY */
 
 .game-day.away{
   background:var(--pink-soft);
+
   color:#c45c77;
-  box-shadow:inset 0 0 0 1px #f5c8d4;
+
+  box-shadow:
+    inset 0 0 0 1px #f5c8d4;
 }
 
-.game-day.away .game-team{color:#9e5065;}
-.game-day.away .game-time{color:#bd7185;}
+
+.game-day.away .game-team{
+  color:#9e5065;
+}
+
+
+.game-day.away .game-time{
+  color:#bd7185;
+}
+
+
 
 /* OPEN */
 
 .game-day.open{
   background:var(--orange-soft);
+
   color:#d97b1d;
-  box-shadow:inset 0 0 0 1px #f3c88d;
+
+  box-shadow:
+    inset 0 0 0 1px #f3c88d;
 }
+
 
 .game-team{
   position:absolute;
+
   left:3px;
   right:3px;
   bottom:6px;
+
   overflow:hidden;
+
   color:#334a66;
+
   font-size:8px;
   font-weight:950;
+
   text-align:center;
+
   text-overflow:ellipsis;
+
   white-space:nowrap;
 }
 
+
 .game-time{
   display:block;
+
   margin-top:3px;
+
   color:#6f8195;
+
   font-size:8px;
   font-weight:800;
 }
 
+
 .open-label{
   display:block;
+
   margin-bottom:2px;
+
   color:#df7f20;
+
   font-size:6px;
   font-weight:950;
 }
 
+
 .attended-mark{
   position:absolute;
+
   top:4px;
   right:4px;
+
   min-width:15px;
   height:15px;
+
   padding:0 3px;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   border-radius:8px;
+
   background:white;
+
   font-size:8px;
-  box-shadow:0 2px 5px rgba(0,0,0,.08);
+
+  box-shadow:
+    0 2px 5px rgba(0,0,0,.08);
 }
 
 
-/* LEGEND */
+
+/* =========================
+   LEGEND
+========================= */
 
 .legend{
   display:flex;
+
   justify-content:center;
+
   gap:14px;
+
   margin:14px 0 3px;
+
   color:#8390a0;
+
   font-size:9px;
   font-weight:800;
 }
 
+
 .dot{
   display:inline-block;
+
   width:8px;
   height:8px;
+
   margin-right:4px;
+
   border-radius:50%;
 }
 
-.home-dot{background:var(--blue);}
-.away-dot{background:#efa5ba;}
-.open-dot{background:var(--orange);}
+
+.home-dot{
+  background:var(--blue);
+}
 
 
-/* GAME DETAIL */
+.away-dot{
+  background:#efa5ba;
+}
+
+
+.open-dot{
+  background:var(--orange);
+}
+
+
+
+/* =========================
+   GAME DETAIL
+========================= */
 
 .game-detail{
   display:none;
+
   position:relative;
+
   margin-top:19px;
+
   padding:19px;
+
   border-radius:20px;
+
   background:white;
+
   border:2px solid #dce9f8;
-  box-shadow:0 7px 18px rgba(57,92,128,.09);
+
+  box-shadow:
+    0 7px 18px rgba(57,92,128,.09);
 }
+
 
 .game-detail:after{
   content:"🏆";
+
   position:absolute;
+
   right:15px;
   top:13px;
+
   font-size:24px;
+
   opacity:.25;
 }
 
+
 .detail-small{
   color:#2675ce;
+
   font-size:9px;
   font-weight:950;
   letter-spacing:1px;
 }
 
-.detail-small.away{color:#d46783;}
-.detail-small.open{color:var(--orange);}
+
+.detail-small.away{
+  color:#d46783;
+}
+
+
+.detail-small.open{
+  color:var(--orange);
+}
+
 
 .detail-title{
   margin-top:7px;
+
   color:#234968;
+
   font-size:19px;
   font-weight:950;
 }
 
+
 .detail-vs{
   padding:0 4px;
+
   color:var(--orange);
+
   font-weight:950;
 }
 
+
 .detail-info{
   margin-top:8px;
+
   color:#7e8b9b;
+
   font-size:11px;
   line-height:1.8;
 }
 
 
-/* ATTENDANCE */
+
+/* =========================
+   ATTENDANCE
+========================= */
 
 .attendance-box{
   margin-top:15px;
+
   padding-top:14px;
+
   border-top:1px dashed #dfe6ee;
 }
 
+
 .attendance-question{
   margin-bottom:9px;
+
   color:#435b75;
+
   font-size:11px;
   font-weight:900;
 }
 
+
 .attend-buttons{
   display:flex;
+
   gap:7px;
 }
 
+
 .attend-btn{
   flex:1;
+
   padding:9px 5px;
+
   border:0;
+
   border-radius:13px;
+
   font-size:10px;
   font-weight:900;
+
   cursor:pointer;
 }
 
+
 .attend-btn.win{
   background:#fff0dd;
+
   color:#df7e20;
 }
 
+
 .attend-btn.lose{
   background:#f2edf3;
+
   color:#776b80;
 }
 
+
 .attend-btn.cancel{
   background:#eef2f6;
+
   color:#778494;
 }
 
+
 .attendance-saved{
   margin-bottom:9px;
+
   padding:8px 10px;
+
   border-radius:12px;
+
   font-size:10px;
   font-weight:900;
 }
 
+
 .attendance-saved.win{
   background:#fff1df;
+
   color:#df7e20;
 }
 
+
 .attendance-saved.lose{
   background:#f1edf3;
+
   color:#766d7f;
 }
 
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
 
 .footer{
   margin-top:27px;
+
   padding:17px 0 9px;
+
   border-top:1px dashed #dce4ed;
+
   color:#9aa6b4;
+
   text-align:center;
 }
+
 
 .footer-main{
   font-size:9px;
@@ -668,39 +1218,71 @@ header h1{
   letter-spacing:1px;
 }
 
+
 .made-by{
   margin-top:7px;
+
   color:#4977aa;
+
   font-size:10px;
   font-weight:900;
 }
 
-.made-by span{color:var(--orange);}
+
+.made-by span{
+  color:var(--orange);
+}
+
+
 
 @media(max-width:370px){
-  .content{padding:14px;}
-  .day{height:66px;}
-  .game-team{font-size:7px;}
-  .next-teams{font-size:21px;}
+
+  .content{
+    padding:14px;
+  }
+
+  .day{
+    height:66px;
+  }
+
+  .game-team{
+    font-size:7px;
+  }
+
+  .next-teams{
+    font-size:21px;
+  }
+
 }
+
 </style>
+
 </head>
+
 
 
 <body>
 
+
 <div class="wrap">
+
 
 <header>
 
   <div class="cloud one">☁️</div>
   <div class="cloud two">☁️</div>
 
-  <div class="season">2026–2027 SEASON</div>
+  <div class="season">
+    2026–2027 SEASON
+  </div>
 
-  <h1>BUSAN KCC EGIS</h1>
+  <h1>
+    BUSAN KCC EGIS
+  </h1>
 
-  <div class="header-sub">GAME SCHEDULE</div>
+  <div class="header-sub">
+    GAME SCHEDULE
+  </div>
 
   <div class="header-icons">
     <span>🏀</span>
@@ -708,6 +1290,7 @@ header h1{
   </div>
 
 </header>
+
 
 
 <div class="content">
@@ -719,7 +1302,78 @@ header h1{
     🏀 NEXT MATCH
   </div>
 
-  <div class="next-game" id="nextGame"></div>
+  <div
+    class="next-game"
+    id="nextGame">
+  </div>
+
+
+
+  <!-- LOGIN -->
+
+  <div class="login-box">
+
+    <div id="loggedOutBox">
+
+      <div class="login-title">
+        MY ACCOUNT
+      </div>
+
+      <input
+        type="text"
+        id="loginUsername"
+        placeholder="아이디"
+        maxlength="20"
+        autocomplete="username"
+      >
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="비밀번호"
+        autocomplete="current-password"
+      >
+
+      <div class="login-buttons">
+
+        <button
+          onclick="loginUser()">
+          로그인
+        </button>
+
+        <button
+          onclick="signupUser()"
+          class="signup-btn">
+          회원가입
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="loggedInBox"
+      style="display:none;">
+
+      <div class="logged-in-user">
+
+        <span id="currentUsername"></span>
+
+        <button
+          onclick="logoutUser()">
+          로그아웃
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div id="loginMessage"></div>
+
+  </div>
+
 
 
   <!-- MY RECORD -->
@@ -727,25 +1381,62 @@ header h1{
   <div class="my-record">
 
     <div class="record-title">
-      <strong>MY 직관 기록</strong>
-      <span>🏆</span>
+
+      <strong>
+        MY 직관 기록
+      </strong>
+
+      <span>
+        🏆
+      </span>
+
     </div>
+
 
     <div class="record-grid">
 
       <div class="record-box total">
-        <span class="record-number" id="totalAttendance">0</span>
-        <span class="record-label">총 직관</span>
+
+        <span
+          class="record-number"
+          id="totalAttendance">
+          0
+        </span>
+
+        <span class="record-label">
+          총 직관
+        </span>
+
       </div>
+
 
       <div class="record-box win">
-        <span class="record-number" id="totalWins">0</span>
-        <span class="record-label">승리요정</span>
+
+        <span
+          class="record-number"
+          id="totalWins">
+          0
+        </span>
+
+        <span class="record-label">
+          승리요정
+        </span>
+
       </div>
 
+
       <div class="record-box rate">
-        <span class="record-number" id="winRate">0%</span>
-        <span class="record-label">직관 승률</span>
+
+        <span
+          class="record-number"
+          id="winRate">
+          0%
+        </span>
+
+        <span class="record-label">
+          직관 승률
+        </span>
+
       </div>
 
     </div>
@@ -753,14 +1444,15 @@ header h1{
   </div>
 
 
-  <!-- KBL 공식 순위 버튼 -->
+
+  <!-- KBL RANKING -->
 
   <a
     href="https://www.kbl.or.kr/match/team-ranking"
     target="_blank"
     rel="noopener noreferrer"
-    class="ranking-btn"
-  >
+    class="ranking-btn">
+
     <span class="ranking-left">
       🏆 현재 KCC 순위 보기
     </span>
@@ -768,7 +1460,9 @@ header h1{
     <span class="ranking-arrow">
       →
     </span>
+
   </a>
+
 
 
   <!-- FILTER -->
@@ -802,20 +1496,35 @@ header h1{
   </div>
 
 
+
   <!-- MONTH -->
 
   <div class="month-nav">
 
-    <button onclick="changeMonth(-1)">‹</button>
+    <button
+      onclick="changeMonth(-1)">
+      ‹
+    </button>
 
-    <div class="month-title" id="monthTitle"></div>
+    <div
+      class="month-title"
+      id="monthTitle">
+    </div>
 
-    <button onclick="changeMonth(1)">›</button>
+    <button
+      onclick="changeMonth(1)">
+      ›
+    </button>
 
   </div>
 
 
-  <div class="calendar" id="calendar"></div>
+
+  <div
+    class="calendar"
+    id="calendar">
+  </div>
+
 
 
   <div class="legend">
@@ -838,7 +1547,12 @@ header h1{
   </div>
 
 
-  <div class="game-detail" id="gameDetail"></div>
+
+  <div
+    class="game-detail"
+    id="gameDetail">
+  </div>
+
 
 
   <div class="footer">
@@ -847,414 +1561,1543 @@ header h1{
       🏀 BUSAN KCC EGIS · 2026–27 🏆
     </div>
 
-   <div class="made-by">
-  Made by
-  <a
-    href="https://www.instagram.com/8plus_one/"
-    target="_blank"
-    rel="noopener noreferrer"
-    style="
-      color:#f28a24;
-      text-decoration:none;
-      font-weight:900;
-    "
-  >
-    @8plus_one
-  </a>
-</div>
+
+    <div class="made-by">
+
+      Made by
+
+      <a
+        href="https://www.instagram.com/8plus_one/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="
+          color:#f28a24;
+          text-decoration:none;
+          font-weight:900;
+        ">
+        @8plus_one
+      </a>
+
+    </div>
 
   </div>
 
+
 </div>
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 
 <script>
+
+
+/* =========================
+   SUPABASE
+========================= */
+
+
+const SUPABASE_URL =
+  "https://iobvxzwsdzqwzvemnldx.supabase.co"
+
+
+const SUPABASE_KEY =
+  "sb_publishable_eSmVL-tcXO9DZhCu5DEG3g_NxnW8Vkv"
+
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+let currentUser=null;
+
+
 
 /* =========================
    경기 데이터
 ========================= */
 
-const games = [
 
-  {date:"2026-09-25",team:"LG",time:"14:00",place:"부산",type:"HOME",category:"OPEN"},
-  {date:"2026-09-27",team:"한국가스공사",time:"16:30",place:"부산",type:"HOME",category:"OPEN"},
+const games=[
 
-  {date:"2026-10-03",team:"LG",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2026-10-05",team:"현대모비스",time:"14:00",place:"울산",type:"AWAY"},
-  {date:"2026-10-07",team:"한국가스공사",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2026-10-10",team:"DB",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2026-10-11",team:"KT",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2026-10-18",team:"정관장",time:"16:30",place:"안양",type:"AWAY"},
-  {date:"2026-10-21",team:"삼성",time:"19:00",place:"잠실학생",type:"AWAY"},
-  {date:"2026-10-24",team:"소노",time:"16:30",place:"고양",type:"AWAY"},
-  {date:"2026-10-27",team:"SK",time:"19:00",place:"잠실학생",type:"AWAY"},
-  {date:"2026-10-29",team:"현대모비스",time:"19:00",place:"울산",type:"AWAY"},
-  {date:"2026-10-31",team:"DB",time:"14:00",place:"부산",type:"HOME"},
 
-  {date:"2026-11-03",team:"소노",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2026-11-08",team:"LG",time:"16:30",place:"창원",type:"AWAY"},
-  {date:"2026-11-14",team:"SK",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2026-11-15",team:"한국가스공사",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2026-11-19",team:"정관장",time:"19:00",place:"안양",type:"AWAY"},
+  {
+    date:"2026-09-25",
+    team:"LG",
+    time:"14:00",
+    place:"부산",
+    type:"HOME",
+    category:"OPEN"
+  },
 
-  {date:"2026-12-04",team:"삼성",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2026-12-06",team:"KT",time:"14:00",place:"수원",type:"AWAY"},
-  {date:"2026-12-09",team:"삼성",time:"19:00",place:"잠실학생",type:"AWAY"},
-  {date:"2026-12-11",team:"SK",time:"19:00",place:"잠실학생",type:"AWAY"},
-  {date:"2026-12-13",team:"한국가스공사",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2026-12-16",team:"정관장",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2026-12-19",team:"현대모비스",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2026-12-21",team:"LG",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2026-12-24",team:"DB",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2026-12-26",team:"KT",time:"16:30",place:"수원",type:"AWAY"},
 
-  {date:"2027-01-02",team:"소노",time:"14:00",place:"고양",type:"AWAY"},
-  {date:"2027-01-04",team:"정관장",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2027-01-08",team:"LG",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2027-01-10",team:"소노",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2027-01-15",team:"한국가스공사",time:"19:00",place:"대구",type:"AWAY"},
-  {date:"2027-01-17",team:"삼성",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2027-01-20",team:"현대모비스",time:"19:00",place:"울산",type:"AWAY"},
-  {date:"2027-01-22",team:"SK",time:"19:00",place:"잠실학생",type:"AWAY"},
-  {date:"2027-01-24",team:"DB",time:"14:00",place:"원주",type:"AWAY"},
+  {
+    date:"2026-09-27",
+    team:"한국가스공사",
+    time:"16:30",
+    place:"부산",
+    type:"HOME",
+    category:"OPEN"
+  },
 
-  {date:"2027-02-04",team:"KT",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2027-02-06",team:"한국가스공사",time:"14:00",place:"대구",type:"AWAY"},
-  {date:"2027-02-07",team:"LG",time:"14:00",place:"창원",type:"AWAY"},
-  {date:"2027-02-09",team:"현대모비스",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2027-02-13",team:"소노",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2027-02-14",team:"삼성",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2027-02-17",team:"KT",time:"19:00",place:"수원",type:"AWAY"},
 
-  {date:"2027-03-04",team:"SK",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2027-03-06",team:"DB",time:"14:00",place:"원주",type:"AWAY"},
-  {date:"2027-03-13",team:"정관장",time:"14:00",place:"안양",type:"AWAY"},
-  {date:"2027-03-15",team:"DB",time:"19:00",place:"원주",type:"AWAY"},
-  {date:"2027-03-18",team:"LG",time:"19:00",place:"창원",type:"AWAY"},
-  {date:"2027-03-20",team:"정관장",time:"14:00",place:"부산",type:"HOME"},
-  {date:"2027-03-23",team:"소노",time:"19:00",place:"고양",type:"AWAY"},
+  {
+    date:"2026-10-03",
+    team:"LG",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
 
-  {date:"2027-04-02",team:"삼성",time:"19:00",place:"잠실학생",type:"AWAY"},
-  {date:"2027-04-04",team:"현대모비스",time:"16:30",place:"부산",type:"HOME"},
-  {date:"2027-04-06",team:"SK",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2027-04-09",team:"KT",time:"19:00",place:"부산",type:"HOME"},
-  {date:"2027-04-11",team:"한국가스공사",time:"14:00",place:"대구",type:"AWAY"}
+
+  {
+    date:"2026-10-05",
+    team:"현대모비스",
+    time:"14:00",
+    place:"울산",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-10-07",
+    team:"한국가스공사",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-10-10",
+    team:"DB",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-10-11",
+    team:"KT",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-10-18",
+    team:"정관장",
+    time:"16:30",
+    place:"안양",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-10-21",
+    team:"삼성",
+    time:"19:00",
+    place:"잠실학생",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-10-24",
+    team:"소노",
+    time:"16:30",
+    place:"고양",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-10-27",
+    team:"SK",
+    time:"19:00",
+    place:"잠실학생",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-10-29",
+    team:"현대모비스",
+    time:"19:00",
+    place:"울산",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-10-31",
+    team:"DB",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-11-03",
+    team:"소노",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-11-08",
+    team:"LG",
+    time:"16:30",
+    place:"창원",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-11-14",
+    team:"SK",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-11-15",
+    team:"한국가스공사",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-11-19",
+    team:"정관장",
+    time:"19:00",
+    place:"안양",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-12-04",
+    team:"삼성",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-12-06",
+    team:"KT",
+    time:"14:00",
+    place:"수원",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-12-09",
+    team:"삼성",
+    time:"19:00",
+    place:"잠실학생",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-12-11",
+    team:"SK",
+    time:"19:00",
+    place:"잠실학생",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2026-12-13",
+    team:"한국가스공사",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-12-16",
+    team:"정관장",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-12-19",
+    team:"현대모비스",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-12-21",
+    team:"LG",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-12-24",
+    team:"DB",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2026-12-26",
+    team:"KT",
+    time:"16:30",
+    place:"수원",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-01-02",
+    team:"소노",
+    time:"14:00",
+    place:"고양",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-01-04",
+    team:"정관장",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-01-08",
+    team:"LG",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-01-10",
+    team:"소노",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-01-15",
+    team:"한국가스공사",
+    time:"19:00",
+    place:"대구",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-01-17",
+    team:"삼성",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-01-20",
+    team:"현대모비스",
+    time:"19:00",
+    place:"울산",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-01-22",
+    team:"SK",
+    time:"19:00",
+    place:"잠실학생",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-01-24",
+    team:"DB",
+    time:"14:00",
+    place:"원주",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-02-04",
+    team:"KT",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-02-06",
+    team:"한국가스공사",
+    time:"14:00",
+    place:"대구",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-02-07",
+    team:"LG",
+    time:"14:00",
+    place:"창원",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-02-09",
+    team:"현대모비스",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-02-13",
+    team:"소노",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-02-14",
+    team:"삼성",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-02-17",
+    team:"KT",
+    time:"19:00",
+    place:"수원",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-03-04",
+    team:"SK",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-03-06",
+    team:"DB",
+    time:"14:00",
+    place:"원주",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-03-13",
+    team:"정관장",
+    time:"14:00",
+    place:"안양",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-03-15",
+    team:"DB",
+    time:"19:00",
+    place:"원주",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-03-18",
+    team:"LG",
+    time:"19:00",
+    place:"창원",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-03-20",
+    team:"정관장",
+    time:"14:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-03-23",
+    team:"소노",
+    time:"19:00",
+    place:"고양",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-04-02",
+    team:"삼성",
+    time:"19:00",
+    place:"잠실학생",
+    type:"AWAY"
+  },
+
+
+  {
+    date:"2027-04-04",
+    team:"현대모비스",
+    time:"16:30",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-04-06",
+    team:"SK",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-04-09",
+    team:"KT",
+    time:"19:00",
+    place:"부산",
+    type:"HOME"
+  },
+
+
+  {
+    date:"2027-04-11",
+    team:"한국가스공사",
+    time:"14:00",
+    place:"대구",
+    type:"AWAY"
+  }
 
 ];
 
 
+
 /* =========================
-   직관 기록 저장
+   직관 기록
 ========================= */
 
-let attendanceRecords=
-  JSON.parse(localStorage.getItem("kccAttendanceRecords")) || {};
+
+let attendanceRecords={};
 
 
-function saveAttendance(){
-
-  localStorage.setItem(
-    "kccAttendanceRecords",
-    JSON.stringify(attendanceRecords)
-  );
-
-  updateAttendanceStats();
-  renderCalendar();
-
-}
-
-
-/* 통계 */
 
 function updateAttendanceStats(){
 
-  const records=Object.values(attendanceRecords);
+  const records=
+    Object.values(attendanceRecords);
 
-  const total=records.length;
+
+  const total=
+    records.length;
+
 
   const wins=
-    records.filter(record=>record==="WIN").length;
+    records.filter(
+      record=>record==="WIN"
+    ).length;
+
 
   const rate=
     total===0
       ? 0
-      : Math.round((wins/total)*100);
+      : Math.round(
+          (wins/total)*100
+        );
 
-  document.getElementById("totalAttendance").innerText=total;
-  document.getElementById("totalWins").innerText=wins;
-  document.getElementById("winRate").innerText=rate+"%";
+
+  document
+    .getElementById("totalAttendance")
+    .innerText=total;
+
+
+  document
+    .getElementById("totalWins")
+    .innerText=wins;
+
+
+  document
+    .getElementById("winRate")
+    .innerText=rate+"%";
 
 }
+
+
+
+/* =========================
+   로그인용 아이디 변환
+========================= */
+
+
+function usernameToEmail(username){
+
+  return (
+    username
+      .trim()
+      .toLowerCase()
+    +
+    "@kccschedule.invalid"
+  );
+
+}
+
+
+
+/* =========================
+   회원가입
+========================= */
+
+
+async function signupUser(){
+
+  const username=
+    document
+      .getElementById("loginUsername")
+      .value
+      .trim();
+
+
+  const password=
+    document
+      .getElementById("loginPassword")
+      .value;
+
+
+  const message=
+    document
+      .getElementById("loginMessage");
+
+
+  if(
+    !/^[a-zA-Z0-9_]{3,20}$/
+      .test(username)
+  ){
+
+    message.innerText=
+      "아이디는 영문·숫자·_ 로 3~20자";
+
+    return;
+  }
+
+
+  if(password.length<6){
+
+    message.innerText=
+      "비밀번호는 6자 이상 입력해주세요.";
+
+    return;
+  }
+
+
+  message.innerText=
+    "가입 중...";
+
+
+  const email=
+    usernameToEmail(username);
+
+
+  const {error}=
+    await supabaseClient
+      .auth
+      .signUp({
+
+        email:email,
+
+        password:password,
+
+        options:{
+
+          data:{
+            username:username
+          }
+
+        }
+
+      });
+
+
+  if(error){
+
+    console.error(error);
+
+
+    if(
+      error.message
+        .toLowerCase()
+        .includes("already")
+    ){
+
+      message.innerText=
+        "이미 사용 중인 아이디예요.";
+
+    }
+
+    else{
+
+      message.innerText=
+        "회원가입에 실패했어요.";
+
+    }
+
+    return;
+  }
+
+
+  message.innerText=
+    "회원가입 완료! 🏀";
+
+}
+
+
+
+/* =========================
+   로그인
+========================= */
+
+
+async function loginUser(){
+
+  const username=
+    document
+      .getElementById("loginUsername")
+      .value
+      .trim();
+
+
+  const password=
+    document
+      .getElementById("loginPassword")
+      .value;
+
+
+  const message=
+    document
+      .getElementById("loginMessage");
+
+
+  if(
+    !username ||
+    !password
+  ){
+
+    message.innerText=
+      "아이디와 비밀번호를 입력해주세요.";
+
+    return;
+  }
+
+
+  message.innerText=
+    "로그인 중...";
+
+
+  const email=
+    usernameToEmail(username);
+
+
+  const {error}=
+    await supabaseClient
+      .auth
+      .signInWithPassword({
+
+        email:email,
+
+        password:password
+
+      });
+
+
+  if(error){
+
+    console.error(error);
+
+    message.innerText=
+      "아이디 또는 비밀번호를 확인해주세요.";
+
+    return;
+  }
+
+
+  message.innerText="";
+
+}
+
+
+
+/* =========================
+   로그아웃
+========================= */
+
+
+async function logoutUser(){
+
+  await supabaseClient
+    .auth
+    .signOut();
+
+}
+
+
+
+/* =========================
+   로그인 화면
+========================= */
+
+
+function updateLoginUI(user){
+
+  const loggedOut=
+    document
+      .getElementById("loggedOutBox");
+
+
+  const loggedIn=
+    document
+      .getElementById("loggedInBox");
+
+
+  const usernameText=
+    document
+      .getElementById("currentUsername");
+
+
+  const message=
+    document
+      .getElementById("loginMessage");
+
+
+  if(user){
+
+    const username=
+      user
+        .user_metadata
+        ?.username
+      ||
+      "사용자";
+
+
+    loggedOut.style.display=
+      "none";
+
+
+    loggedIn.style.display=
+      "block";
+
+
+    usernameText.innerText=
+      username+" 님 🏀";
+
+
+    message.innerText="";
+
+  }
+
+
+  else{
+
+    loggedOut.style.display=
+      "block";
+
+
+    loggedIn.style.display=
+      "none";
+
+
+    message.innerText="";
+
+  }
+
+}
+
+
+
+/* =========================
+   클라우드 기록 불러오기
+========================= */
+
+
+async function loadAttendanceFromCloud(){
+
+  attendanceRecords={};
+
+
+  if(!currentUser){
+
+    updateAttendanceStats();
+
+    renderCalendar();
+
+    return;
+  }
+
+
+  const {data,error}=
+    await supabaseClient
+
+      .from("attendance_records")
+
+      .select("game_date,result")
+
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+  }
+
+
+  (data || [])
+    .forEach(record=>{
+
+      attendanceRecords[
+        record.game_date
+      ]=record.result;
+
+    });
+
+
+  updateAttendanceStats();
+
+  renderCalendar();
+
+}
+
 
 
 /* =========================
    기본 설정
 ========================= */
 
+
 let currentFilter="ALL";
+
 
 const now=new Date();
 
-const upcoming=[...games]
-  .sort((a,b)=>new Date(a.date)-new Date(b.date))
-  .find(g=>new Date(g.date+"T23:59:59")>=now);
 
-const initial=upcoming || games[games.length-1];
+const upcoming=
+  [...games]
 
-const initialDate=new Date(initial.date+"T00:00:00");
+    .sort(
+      (a,b)=>
+        new Date(a.date)-
+        new Date(b.date)
+    )
 
-let currentYear=initialDate.getFullYear();
-let currentMonth=initialDate.getMonth();
+    .find(
+      g=>
+        new Date(
+          g.date+"T23:59:59"
+        )>=now
+    );
+
+
+const initial=
+  upcoming ||
+  games[games.length-1];
+
+
+const initialDate=
+  new Date(
+    initial.date+"T00:00:00"
+  );
+
+
+let currentYear=
+  initialDate.getFullYear();
+
+
+let currentMonth=
+  initialDate.getMonth();
+
 
 
 /* =========================
    달력
 ========================= */
 
+
 function renderCalendar(){
 
-  const calendar=document.getElementById("calendar");
-  const title=document.getElementById("monthTitle");
+  const calendar=
+    document
+      .getElementById("calendar");
+
+
+  const title=
+    document
+      .getElementById("monthTitle");
+
 
   calendar.innerHTML="";
 
+
   const monthNames=[
-    "JANUARY","FEBRUARY","MARCH","APRIL",
-    "MAY","JUNE","JULY","AUGUST",
-    "SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"
+
+    "JANUARY",
+    "FEBRUARY",
+    "MARCH",
+    "APRIL",
+    "MAY",
+    "JUNE",
+    "JULY",
+    "AUGUST",
+    "SEPTEMBER",
+    "OCTOBER",
+    "NOVEMBER",
+    "DECEMBER"
+
   ];
 
+
   title.innerHTML=
-    `${currentYear}. ${String(currentMonth+1).padStart(2,"0")}
-    <small>${monthNames[currentMonth]}</small>`;
 
-  const weekdays=["일","월","화","수","목","금","토"];
+    `${currentYear}. ${String(
+      currentMonth+1
+    ).padStart(2,"0")}
 
-  weekdays.forEach((name,index)=>{
+    <small>
+      ${monthNames[currentMonth]}
+    </small>`;
 
-    const div=document.createElement("div");
 
-    div.className="day-name";
+  const weekdays=[
+    "일",
+    "월",
+    "화",
+    "수",
+    "목",
+    "금",
+    "토"
+  ];
 
-    if(index===0) div.classList.add("sun");
-    if(index===6) div.classList.add("sat");
 
-    div.innerText=name;
+  weekdays
+    .forEach(
+      (name,index)=>{
 
-    calendar.appendChild(div);
+        const div=
+          document
+            .createElement("div");
 
-  });
+
+        div.className=
+          "day-name";
+
+
+        if(index===0){
+          div.classList.add("sun");
+        }
+
+
+        if(index===6){
+          div.classList.add("sat");
+        }
+
+
+        div.innerText=name;
+
+
+        calendar
+          .appendChild(div);
+
+      }
+    );
 
 
   const firstDay=
-    new Date(currentYear,currentMonth,1).getDay();
+    new Date(
+      currentYear,
+      currentMonth,
+      1
+    ).getDay();
 
-  for(let i=0;i<firstDay;i++){
 
-    const empty=document.createElement("div");
+  for(
+    let i=0;
+    i<firstDay;
+    i++
+  ){
 
-    empty.className="day empty";
+    const empty=
+      document
+        .createElement("div");
 
-    calendar.appendChild(empty);
+
+    empty.className=
+      "day empty";
+
+
+    calendar
+      .appendChild(empty);
 
   }
 
 
   const lastDate=
-    new Date(currentYear,currentMonth+1,0).getDate();
+    new Date(
+      currentYear,
+      currentMonth+1,
+      0
+    ).getDate();
 
 
-  for(let day=1;day<=lastDate;day++){
+  for(
+    let day=1;
+    day<=lastDate;
+    day++
+  ){
 
-    const cell=document.createElement("div");
+    const cell=
+      document
+        .createElement("div");
 
-    cell.className="day";
+
+    cell.className=
+      "day";
+
 
     const weekday=
-      new Date(currentYear,currentMonth,day).getDay();
+      new Date(
+        currentYear,
+        currentMonth,
+        day
+      ).getDay();
 
-    if(weekday===0) cell.classList.add("sun");
-    if(weekday===6) cell.classList.add("sat");
+
+    if(weekday===0){
+      cell.classList.add("sun");
+    }
+
+
+    if(weekday===6){
+      cell.classList.add("sat");
+    }
+
 
     cell.innerHTML=day;
 
 
     const dateString=
-      currentYear+"-"+
-      String(currentMonth+1).padStart(2,"0")+"-"+
-      String(day).padStart(2,"0");
+
+      currentYear
+      +"-"
+
+      +String(
+        currentMonth+1
+      ).padStart(2,"0")
+
+      +"-"
+
+      +String(day)
+        .padStart(2,"0");
 
 
-    const game=games.find(g=>g.date===dateString);
+    const game=
+      games.find(
+        g=>g.date===dateString
+      );
 
 
     if(game){
 
       let visible=false;
 
-      if(currentFilter==="ALL"){
+
+      if(
+        currentFilter==="ALL"
+      ){
+
         visible=true;
+
       }
 
-      else if(currentFilter==="OPEN"){
-        visible=game.category==="OPEN";
+
+      else if(
+        currentFilter==="OPEN"
+      ){
+
+        visible=
+          game.category==="OPEN";
+
       }
+
 
       else{
+
         visible=
-          game.type===currentFilter &&
+
+          game.type===
+          currentFilter
+
+          &&
+
           game.category!=="OPEN";
+
       }
 
 
       if(visible){
 
-        cell.classList.add("game-day");
+        cell
+          .classList
+          .add("game-day");
 
-        if(game.category==="OPEN"){
-          cell.classList.add("open");
+
+        if(
+          game.category==="OPEN"
+        ){
+
+          cell
+            .classList
+            .add("open");
+
         }
 
-        else if(game.type==="HOME"){
-          cell.classList.add("home");
+
+        else if(
+          game.type==="HOME"
+        ){
+
+          cell
+            .classList
+            .add("home");
+
         }
+
 
         else{
-          cell.classList.add("away");
+
+          cell
+            .classList
+            .add("away");
+
         }
 
 
-        const gameText=document.createElement("div");
+        const gameText=
+          document
+            .createElement("div");
 
-        gameText.className="game-team";
+
+        gameText.className=
+          "game-team";
+
 
         gameText.innerHTML=
 
-          (game.category==="OPEN"
-            ? '<span class="open-label">OPEN</span>'
-            : '')
+          (
+            game.category==="OPEN"
 
-          + game.team +
+            ?
+
+            '<span class="open-label">OPEN</span>'
+
+            :
+
+            ''
+          )
+
+          +
+
+          game.team
+
+          +
 
           '<span class="game-time">'
-          + game.time +
+
+          +
+
+          game.time
+
+          +
+
           '</span>';
 
-        cell.appendChild(gameText);
+
+        cell
+          .appendChild(gameText);
 
 
-        /* 직관 기록 마크 */
+        const record=
+          attendanceRecords[
+            game.date
+          ];
 
-        const record=attendanceRecords[game.date];
 
         if(record){
 
-          const mark=document.createElement("div");
+          const mark=
+            document
+              .createElement("div");
 
-          mark.className="attended-mark";
+
+          mark.className=
+            "attended-mark";
+
 
           mark.innerText=
-            record==="WIN"
-              ? "🏆"
-              : "✓";
 
-          cell.appendChild(mark);
+            record==="WIN"
+
+              ?
+
+              "🏆"
+
+              :
+
+              "✓";
+
+
+          cell
+            .appendChild(mark);
 
         }
 
 
         cell.onclick=()=>{
+
           showGame(game);
+
         };
 
       }
 
     }
 
-    calendar.appendChild(cell);
+
+    calendar
+      .appendChild(cell);
 
   }
 
 }
+
 
 
 /* =========================
    월 이동
 ========================= */
 
+
 function changeMonth(direction){
 
   currentMonth+=direction;
 
+
   if(currentMonth>11){
+
     currentMonth=0;
+
     currentYear++;
+
   }
 
+
   if(currentMonth<0){
+
     currentMonth=11;
+
     currentYear--;
+
   }
+
 
   renderCalendar();
 
-  document.getElementById("gameDetail").style.display="none";
+
+  document
+    .getElementById(
+      "gameDetail"
+    )
+    .style
+    .display="none";
 
 }
+
 
 
 /* =========================
    필터
 ========================= */
 
-function setFilter(filter,button){
 
-  currentFilter=filter;
+function setFilter(
+  filter,
+  button
+){
+
+  currentFilter=
+    filter;
+
 
   document
     .querySelectorAll(".filter")
-    .forEach(btn=>btn.classList.remove("active"));
 
-  button.classList.add("active");
+    .forEach(
+      btn=>
+        btn
+          .classList
+          .remove("active")
+    );
+
+
+  button
+    .classList
+    .add("active");
+
 
   renderCalendar();
 
 }
 
 
+
 /* =========================
    경기 상세
 ========================= */
 
+
 function showGame(game){
 
-  const detail=document.getElementById("gameDetail");
+  const detail=
+    document
+      .getElementById(
+        "gameDetail"
+      );
 
-  const date=new Date(game.date+"T00:00:00");
 
-  const weekdays=["일","월","화","수","목","금","토"];
+  const date=
+    new Date(
+      game.date+"T00:00:00"
+    );
 
-  let label=game.type;
+
+  const weekdays=[
+    "일",
+    "월",
+    "화",
+    "수",
+    "목",
+    "금",
+    "토"
+  ];
+
+
+  let label=
+    game.type;
+
+
   let labelClass="";
 
-  if(game.category==="OPEN"){
-    label="OPEN MATCH";
-    labelClass="open";
+
+  if(
+    game.category==="OPEN"
+  ){
+
+    label=
+      "OPEN MATCH";
+
+    labelClass=
+      "open";
+
   }
 
-  else if(game.type==="AWAY"){
-    labelClass="away";
+
+  else if(
+    game.type==="AWAY"
+  ){
+
+    labelClass=
+      "away";
+
   }
 
-
-  /* 무조건 VS */
 
   const title=
-    `KCC <span class="detail-vs">VS</span> ${game.team}`;
+
+    `KCC
+    <span class="detail-vs">
+      VS
+    </span>
+    ${game.team}`;
 
 
-  const record=attendanceRecords[game.date];
+  const record=
+    attendanceRecords[
+      game.date
+    ];
+
 
   let attendanceHTML="";
 
@@ -1263,34 +3106,67 @@ function showGame(game){
 
     attendanceHTML=`
 
-      <div class="attendance-saved ${record==="WIN" ? "win" : "lose"}">
+      <div
+        class="
+          attendance-saved
+          ${record==="WIN" ? "win" : "lose"}
+        ">
 
         ${
           record==="WIN"
-            ? "🏆 직관 · 승리!"
-            : "🏀 직관 · 패배"
+
+            ?
+
+            "🏆 직관 · 승리!"
+
+            :
+
+            "🏀 직관 · 패배"
         }
 
       </div>
+
 
       <div class="attend-buttons">
 
         <button
           class="attend-btn win"
-          onclick="setAttendance('${game.date}','WIN')">
+          onclick="
+            setAttendance(
+              '${game.date}',
+              'WIN'
+            )
+          ">
+
           승리 🏆
+
         </button>
+
 
         <button
           class="attend-btn lose"
-          onclick="setAttendance('${game.date}','LOSE')">
+          onclick="
+            setAttendance(
+              '${game.date}',
+              'LOSE'
+            )
+          ">
+
           패배
+
         </button>
+
 
         <button
           class="attend-btn cancel"
-          onclick="removeAttendance('${game.date}')">
+          onclick="
+            removeAttendance(
+              '${game.date}'
+            )
+          ">
+
           기록 취소
+
         </button>
 
       </div>
@@ -1298,26 +3174,55 @@ function showGame(game){
 
   }
 
+
   else{
 
     attendanceHTML=`
 
       <div class="attendance-question">
-        이 경기 직관했나요?
+
+        ${
+          currentUser
+
+            ?
+
+            "이 경기 직관했나요?"
+
+            :
+
+            "로그인하면 직관 기록을 저장할 수 있어요 🏀"
+        }
+
       </div>
+
 
       <div class="attend-buttons">
 
         <button
           class="attend-btn win"
-          onclick="setAttendance('${game.date}','WIN')">
+          onclick="
+            setAttendance(
+              '${game.date}',
+              'WIN'
+            )
+          ">
+
           직관 + 승리 🏆
+
         </button>
+
 
         <button
           class="attend-btn lose"
-          onclick="setAttendance('${game.date}','LOSE')">
+          onclick="
+            setAttendance(
+              '${game.date}',
+              'LOSE'
+            )
+          ">
+
           직관 + 패배
+
         </button>
 
       </div>
@@ -1328,20 +3233,36 @@ function showGame(game){
 
   detail.innerHTML=`
 
-    <div class="detail-small ${labelClass}">
+    <div
+      class="
+        detail-small
+        ${labelClass}
+      ">
+
       ${label}
+
     </div>
 
+
     <div class="detail-title">
+
       ${title}
+
     </div>
+
 
     <div class="detail-info">
 
       🗓
+
       ${date.getMonth()+1}월
+
       ${date.getDate()}일
-      ${weekdays[date.getDay()]}요일
+
+      ${weekdays[
+        date.getDay()
+      ]}요일
+
       · ${game.time}
 
       <br>
@@ -1352,67 +3273,284 @@ function showGame(game){
 
 
     <div class="attendance-box">
+
       ${attendanceHTML}
+
     </div>
+
   `;
 
-  detail.style.display="block";
+
+  detail.style.display=
+    "block";
 
 }
 
 
-/* 직관 저장 */
 
-function setAttendance(date,result){
+/* =========================
+   직관 저장
+========================= */
 
-  attendanceRecords[date]=result;
 
-  saveAttendance();
+async function setAttendance(
+  date,
+  result
+){
 
-  const game=games.find(g=>g.date===date);
+  if(!currentUser){
+
+    alert(
+      "로그인 후 직관 기록을 저장할 수 있어요 🏀"
+    );
+
+    return;
+  }
+
+
+  const {
+    data:existing,
+    error:findError
+  }=
+
+    await supabaseClient
+
+      .from(
+        "attendance_records"
+      )
+
+      .select("id")
+
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+
+      .eq(
+        "game_date",
+        date
+      )
+
+      .maybeSingle();
+
+
+  if(findError){
+
+    console.error(
+      findError
+    );
+
+    alert(
+      "기록 확인 중 오류가 발생했어요."
+    );
+
+    return;
+  }
+
+
+  let error;
+
+
+  if(existing){
+
+    const response=
+
+      await supabaseClient
+
+        .from(
+          "attendance_records"
+        )
+
+        .update({
+          result:result
+        })
+
+        .eq(
+          "id",
+          existing.id
+        );
+
+
+    error=
+      response.error;
+
+  }
+
+
+  else{
+
+    const response=
+
+      await supabaseClient
+
+        .from(
+          "attendance_records"
+        )
+
+        .insert({
+
+          user_id:
+            currentUser.id,
+
+          game_date:
+            date,
+
+          result:
+            result
+
+        });
+
+
+    error=
+      response.error;
+
+  }
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "직관 기록 저장에 실패했어요."
+    );
+
+    return;
+  }
+
+
+  attendanceRecords[
+    date
+  ]=result;
+
+
+  updateAttendanceStats();
+
+  renderCalendar();
+
+
+  const game=
+    games.find(
+      g=>g.date===date
+    );
+
 
   showGame(game);
 
 }
 
 
-/* 기록 취소 */
 
-function removeAttendance(date){
+/* =========================
+   기록 취소
+========================= */
 
-  delete attendanceRecords[date];
 
-  saveAttendance();
+async function removeAttendance(
+  date
+){
 
-  const game=games.find(g=>g.date===date);
+  if(!currentUser){
+
+    return;
+  }
+
+
+  const {error}=
+
+    await supabaseClient
+
+      .from(
+        "attendance_records"
+      )
+
+      .delete()
+
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+
+      .eq(
+        "game_date",
+        date
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "기록 삭제에 실패했어요."
+    );
+
+    return;
+  }
+
+
+  delete attendanceRecords[
+    date
+  ];
+
+
+  updateAttendanceStats();
+
+  renderCalendar();
+
+
+  const game=
+    games.find(
+      g=>g.date===date
+    );
+
 
   showGame(game);
 
 }
+
 
 
 /* =========================
    NEXT MATCH
 ========================= */
 
+
 function renderNextGame(){
 
-  const box=document.getElementById("nextGame");
+  const box=
+    document
+      .getElementById(
+        "nextGame"
+      );
 
-  const now=new Date();
 
-  const sorted=[...games].sort(
-    (a,b)=>new Date(a.date)-new Date(b.date)
-  );
+  const now=
+    new Date();
 
-  const next=sorted.find(
-    game=>new Date(game.date+"T23:59:59")>=now
-  );
+
+  const sorted=
+    [...games]
+      .sort(
+        (a,b)=>
+          new Date(a.date)-
+          new Date(b.date)
+      );
+
+
+  const next=
+    sorted.find(
+      game=>
+        new Date(
+          game.date+"T23:59:59"
+        )>=now
+    );
 
 
   if(!next){
 
     box.innerHTML=`
+
       <div class="next-teams">
         🏆 시즌 종료
       </div>
@@ -1420,76 +3558,139 @@ function renderNextGame(){
       <div class="next-info">
         2026–2027 시즌 일정이 종료되었습니다.
       </div>
+
     `;
 
     return;
   }
 
 
-  const gameDate=new Date(next.date+"T00:00:00");
+  const gameDate=
+    new Date(
+      next.date+"T00:00:00"
+    );
+
 
   const today=
     new Date(
+
       now.getFullYear(),
+
       now.getMonth(),
+
       now.getDate()
+
     );
+
 
   const target=
     new Date(
+
       gameDate.getFullYear(),
+
       gameDate.getMonth(),
+
       gameDate.getDate()
+
     );
+
 
   const diffDays=
     Math.round(
-      (target-today)/(1000*60*60*24)
+
+      (target-today)
+
+      /
+
+      (1000*60*60*24)
+
     );
 
+
   const dday=
+
     diffDays===0
-      ? "TODAY"
-      : "D-"+diffDays;
+
+      ?
+
+      "TODAY"
+
+      :
+
+      "D-"+diffDays;
+
 
   const weekdays=[
-    "SUN","MON","TUE","WED","THU","FRI","SAT"
+
+    "SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
+
   ];
 
 
   let badgeClass="";
 
-  if(next.category==="OPEN"){
+
+  if(
+    next.category==="OPEN"
+  ){
+
     badgeClass="open";
+
   }
 
-  else if(next.type==="AWAY"){
+
+  else if(
+    next.type==="AWAY"
+  ){
+
     badgeClass="away";
+
   }
 
 
   const badge=
+
     next.category==="OPEN"
-      ? "OPEN MATCH"
-      : next.type;
+
+      ?
+
+      "OPEN MATCH"
+
+      :
+
+      next.type;
 
 
   const title=
+
     `KCC
-    <span class="next-vs">VS</span>
+    <span class="next-vs">
+      VS
+    </span>
     ${next.team}`;
 
 
   const category=
+
     next.category==="OPEN"
 
-      ? `<span class="category-text open">
-           OPEN MATCH
-         </span>`
+      ?
 
-      : `<span class="category-text">
-           KBL REGULAR SEASON
-         </span>`;
+      `<span class="category-text open">
+        OPEN MATCH
+      </span>`
+
+      :
+
+      `<span class="category-text">
+        KBL REGULAR SEASON
+      </span>`;
 
 
   box.innerHTML=`
@@ -1500,44 +3701,128 @@ function renderNextGame(){
         ${dday}
       </div>
 
-      <div class="next-badge ${badgeClass}">
+
+      <div
+        class="
+          next-badge
+          ${badgeClass}
+        ">
+
         ${badge}
+
       </div>
 
     </div>
 
 
     <div class="next-teams">
+
       ${title}
+
     </div>
 
 
     <div class="next-info">
 
       🗓
+
       ${next.date.replaceAll("-",".")}
-      ${weekdays[gameDate.getDay()]}
+
+      ${weekdays[
+        gameDate.getDay()
+      ]}
+
       · ${next.time}
 
       <br>
 
       📍 ${next.place}
+
       &nbsp; · &nbsp;
+
       ${category}
 
     </div>
+
   `;
 
 }
 
 
-/* START */
 
-updateAttendanceStats();
-renderCalendar();
-renderNextGame();
+/* =========================
+   로그인 상태 변경
+========================= */
+
+
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    (event,session)=>{
+
+      currentUser=
+        session?.user || null;
+
+
+      updateLoginUI(
+        currentUser
+      );
+
+
+      setTimeout(
+        ()=>{
+
+          loadAttendanceFromCloud();
+
+        },
+        0
+      );
+
+    }
+  );
+
+
+
+/* =========================
+   START
+========================= */
+
+
+async function startApp(){
+
+  updateAttendanceStats();
+
+  renderCalendar();
+
+  renderNextGame();
+
+
+  const {data}=
+
+    await supabaseClient
+      .auth
+      .getSession();
+
+
+  currentUser=
+    data.session?.user || null;
+
+
+  updateLoginUI(
+    currentUser
+  );
+
+
+  await loadAttendanceFromCloud();
+
+}
+
+
+startApp();
+
 
 </script>
+
 
 </body>
 </html>
