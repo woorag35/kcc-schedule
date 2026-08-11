@@ -3150,7 +3150,7 @@ function showGame(game){
      <button
     class="attend-btn win"
     onclick="
-        alert('🧚 당신은 승리요정! 🧚');
+       
 setAttendance(
     '${game.date}',
     'WIN'
@@ -3452,7 +3452,9 @@ async function setAttendance(
       g=>g.date===date
     );
 
-
+if (result === "WIN") {
+  alert("🧚 당신은 승리요정! 🧚");
+}
   showGame(game);
 
 }
