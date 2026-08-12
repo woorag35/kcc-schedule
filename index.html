@@ -1264,7 +1264,41 @@ header h1{
   align-items:center;
   justify-content:center;
 }
+.home-away-record {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
 
+.home-away-box {
+  padding: 12px 8px;
+  border-radius: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.home-away-box.home {
+  background: #e8f1fb;
+}
+
+.home-away-box.away {
+  background: #f1f1f1;
+}
+
+.home-away-title {
+  font-size: 13px;
+  font-weight: 900;
+  color: #365b78;
+}
+
+.home-away-stats {
+  font-size: 12px;
+  font-weight: 700;
+  color: #7a8490;
+}
 </style>
 
 </head>
@@ -1454,6 +1488,18 @@ header h1{
 
     </div>
 
+<div class="home-away-record">
+  <div class="home-away-box home">
+    <span class="home-away-title">🏠 HOME</span>
+    <span class="home-away-stats" id="homeRecord">0경기 · 0승 0패 · 0%</span>
+  </div>
+
+  <div class="home-away-box away">
+    <span class="home-away-title">✈️ AWAY</span>
+    <span class="home-away-stats" id="awayRecord">0경기 · 0승 0패 · 0%</span>
+  </div>
+</div>
+    
   </div>
 
 
@@ -2160,44 +2206,95 @@ let attendanceRecords={};
 
 function updateAttendanceStats(){
 
-  const records=
-    Object.values(attendanceRecords);
+  const entries = Object.entries(attendanceRecords);
 
+  const total = entries.length;
 
-  const total=
-    records.length;
+  const wins = entries.filter(
+    ([date, result]) => result === "WIN"
+  ).length;
 
-
-  const wins=
-    records.filter(
-      record=>record==="WIN"
-    ).length;
-
-
-  const rate=
-    total===0
+  const rate =
+    total === 0
       ? 0
-      : Math.round(
-          (wins/total)*100
-        );
+      : Math.round((wins / total) * 100);
 
+
+  /* HOME 기록 */
+
+  const homeEntries = entries.filter(([date]) => {
+    const game = games.find(g => g.date === date);
+    return game && game.type === "HOME";
+  });
+
+  const homeTotal = homeEntries.length;
+
+  const homeWins = homeEntries.filter(
+    ([date, result]) => result === "WIN"
+  ).length;
+
+  const homeLosses = homeTotal - homeWins;
+
+  const homeRate =
+    homeTotal === 0
+      ? 0
+      : Math.round((homeWins / homeTotal) * 100);
+
+
+  /* AWAY 기록 */
+
+  const awayEntries = entries.filter(([date]) => {
+    const game = games.find(g => g.date === date);
+    return game && game.type === "AWAY";
+  });
+
+  const awayTotal = awayEntries.length;
+
+  const awayWins = awayEntries.filter(
+    ([date, result]) => result === "WIN"
+  ).length;
+
+  const awayLosses = awayTotal - awayWins;
+
+  const awayRate =
+    awayTotal === 0
+      ? 0
+      : Math.round((awayWins / awayTotal) * 100);
+
+
+  /* 기존 전체 기록 */
 
   document
     .getElementById("totalAttendance")
-    .innerText=total;
-
+    .innerText = total;
 
   document
     .getElementById("totalWins")
-    .innerText=wins;
-
+    .innerText = wins;
 
   document
     .getElementById("winRate")
-    .innerText=rate+"%";
+    .innerText = rate + "%";
 
+
+  /* HOME / AWAY 기록 */
+
+  document
+    .getElementById("homeRecord")
+    .innerText =
+      homeTotal + "경기 · "
+      + homeWins + "승 "
+      + homeLosses + "패 · "
+      + homeRate + "%";
+
+  document
+    .getElementById("awayRecord")
+    .innerText =
+      awayTotal + "경기 · "
+      + awayWins + "승 "
+      + awayLosses + "패 · "
+      + awayRate + "%";
 }
-
 
 
 /* =========================
