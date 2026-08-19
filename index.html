@@ -902,8 +902,8 @@ border-radius:9px;
 .schedule-type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
 .schedule-type-tab{padding:10px;border:1px solid #dce6ef;border-radius:11px;background:#f7f9fb;color:#76879a;font-size:12px;font-weight:900;cursor:pointer;}
 .schedule-type-tab.active{border-color:#efaa66;background:#fff3e7;color:#cf7018;box-shadow:inset 0 0 0 1px #efaa66;}
-.schedule-emoji-picker{display:flex;flex-wrap:wrap;gap:7px;padding:2px 0;}
-.schedule-emoji-btn{width:38px;height:38px;padding:0;border:1px solid #dce6ef;border-radius:11px;background:#f7f9fb;font-size:20px;line-height:38px;cursor:pointer;}
+.schedule-emoji-picker{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;padding:2px 0;}
+.schedule-emoji-btn{width:100%;height:38px;padding:0;border:1px solid #dce6ef;border-radius:11px;background:#f7f9fb;font-size:20px;line-height:38px;cursor:pointer;}
 .schedule-emoji-btn.active{border-color:#ef9a45;background:#fff3e7;box-shadow:inset 0 0 0 1px #ef9a45;}
 .schedule-form input,.schedule-form textarea{width:100%;padding:11px 12px;border:1px solid #d9e3ed;border-radius:11px;background:#fbfdff;color:#263d59;font-family:inherit;font-size:16px;outline:none;}
 .schedule-form input[type="time"]{
@@ -1901,6 +1901,13 @@ border-radius:9px;
         <button class="schedule-emoji-btn" type="button" data-emoji="✈️" onclick="selectScheduleEmoji('✈️')">✈️</button>
         <button class="schedule-emoji-btn" type="button" data-emoji="🎁" onclick="selectScheduleEmoji('🎁')">🎁</button>
         <button class="schedule-emoji-btn" type="button" data-emoji="🍽️" onclick="selectScheduleEmoji('🍽️')">🍽️</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="🍀" onclick="selectScheduleEmoji('🍀')">🍀</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="🏨" onclick="selectScheduleEmoji('🏨')">🏨</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="💓" onclick="selectScheduleEmoji('💓')">💓</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="💧" onclick="selectScheduleEmoji('💧')">💧</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="💰" onclick="selectScheduleEmoji('💰')">💰</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="☕" onclick="selectScheduleEmoji('☕')">☕</button>
+        <button class="schedule-emoji-btn" type="button" data-emoji="🎉" onclick="selectScheduleEmoji('🎉')">🎉</button>
       </div>
       <input type="text" id="scheduleName" maxlength="40" placeholder="일정 제목 *">
       <input type="text" id="scheduleTime" placeholder="시간" inputmode="none" onfocus="this.type='time'" onblur="if(!this.value)this.type='text'">
@@ -2032,7 +2039,7 @@ function selectScheduleType(type){
   document.getElementById("scheduleTypePlan")?.classList.toggle("active",type==="PLAN");
   document.getElementById("scheduleTypeTicket")?.classList.toggle("active",type==="TICKET");
   const picker=document.getElementById("scheduleEmojiPicker");
-  if(picker) picker.style.display=type==="PLAN" ? "flex" : "none";
+  if(picker) picker.style.display=type==="PLAN" ? "grid" : "none";
 }
 
 function selectScheduleEmoji(emoji){
