@@ -15,7 +15,7 @@
 
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/png" href="icon.png">
- 
+
 
 <style>
 
@@ -1351,6 +1351,77 @@ border-radius:9px;
 
 
   
+/* EASL 민트 최종 적용: 앞선 공통 스타일보다 항상 우선 */
+.filter.filter-easl{
+  background:#e9f6f2 !important;
+  color:#579688 !important;
+}
+
+.filter.filter-easl.active{
+  background:#79b9aa !important;
+  color:#fff !important;
+  border-color:#579688 !important;
+}
+
+.day.game-day.easl{
+  background:#e9f6f2 !important;
+  color:#579688 !important;
+  box-shadow:inset 0 0 0 1px #bfe3da !important;
+}
+
+.day.game-day.easl .game-team,
+.day.game-day.easl .game-time,
+.day.game-day.easl .easl-label{
+  color:#579688 !important;
+}
+
+.day.game-day.easl .game-team{
+  overflow:visible !important;
+  white-space:normal !important;
+  text-overflow:clip !important;
+}
+
+.easl-label{
+  display:table !important;
+  margin:0 auto 3px !important;
+  padding:2px 4px !important;
+  border-radius:5px !important;
+  line-height:1.1 !important;
+  white-space:nowrap !important;
+}
+
+.easl-label.easl-home{
+  background:rgba(87,150,136,.22) !important;
+}
+
+.easl-label.easl-away{
+  background:rgba(255,255,255,.72) !important;
+}
+
+.easl-team-name{
+  display:-webkit-box;
+  overflow:hidden;
+  min-height:18px;
+  line-height:9px;
+  white-space:normal;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+
+.easl-dot{
+  background:#79b9aa !important;
+}
+
+.next-badge.easl{
+  background:#e9f6f2 !important;
+  color:#579688 !important;
+}
+
+.detail-small.easl{
+  color:#579688 !important;
+}
 </style>
 
 </head>
@@ -3125,7 +3196,7 @@ function renderCalendar(){
 
             ?
 
-            '<span class="easl-label">EASL · '+game.type+'</span>'
+            '<span class="easl-label easl-'+game.type.toLowerCase()+'">EASL · '+game.type+'</span>'
 
             :
 
@@ -3134,7 +3205,17 @@ function renderCalendar(){
 
           +
 
-          game.team
+          (
+            game.category==="EASL"
+
+            ?
+
+            '<span class="easl-team-name">'+game.team+'</span>'
+
+            :
+
+            game.team
+          )
 
           +
 
