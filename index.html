@@ -825,6 +825,91 @@ border-radius:9px;
   font-size:10px;
 }
 
+.my-schedule-icon{
+  position:absolute;
+  right:4px;
+  bottom:4px;
+  width:21px;
+  height:21px;
+  padding:0;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  z-index:3;
+  filter:drop-shadow(0 1px 1px rgba(65,43,28,.18));
+}
+
+.my-schedule-icon img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.personal-schedule-btn{
+  width:100%;
+  margin-top:11px;
+  padding:11px 12px;
+  border:1px solid #efb16f;
+  border-radius:12px;
+  background:#fff7ed;
+  color:#cf7018;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.schedule-modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(29,48,70,.48);
+  z-index:9999;
+}
+
+.schedule-modal.open{display:flex;}
+
+.schedule-panel{
+  width:100%;
+  max-width:390px;
+  max-height:86vh;
+  overflow:auto;
+  padding:20px;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 18px 50px rgba(22,48,78,.25);
+}
+
+.schedule-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.schedule-title{font-size:18px;font-weight:950;color:#194d85;}
+.schedule-date{margin-top:4px;font-size:11px;font-weight:800;color:#8a98a8;}
+.schedule-close{border:0;background:#edf3f9;color:#60758e;width:31px;height:31px;border-radius:50%;font-size:20px;cursor:pointer;}
+.schedule-list{display:grid;gap:8px;margin-bottom:12px;}
+.schedule-card{padding:12px;border:1px solid #f1c28f;border-radius:13px;background:#fff8f0;cursor:pointer;}
+.schedule-card strong{display:block;color:#b95d10;font-size:13px;}
+.schedule-card span{display:block;margin-top:5px;color:#738196;font-size:11px;line-height:1.5;white-space:pre-wrap;}
+.schedule-empty{padding:13px;border-radius:12px;background:#f5f8fb;color:#8492a3;font-size:11px;text-align:center;}
+.schedule-form{display:grid;gap:9px;padding-top:13px;border-top:1px solid #e9eef4;}
+.schedule-form-title{font-size:12px;font-weight:950;color:#385b80;}
+.schedule-form input,.schedule-form textarea{width:100%;padding:11px 12px;border:1px solid #d9e3ed;border-radius:11px;background:#fbfdff;color:#263d59;font:inherit;font-size:12px;outline:none;}
+.schedule-form input:focus,.schedule-form textarea:focus{border-color:#ef9a45;box-shadow:0 0 0 3px rgba(242,138,36,.12);}
+.schedule-form textarea{min-height:74px;resize:vertical;}
+.schedule-actions{display:flex;gap:7px;margin-top:2px;}
+.schedule-actions button{flex:1;padding:11px 8px;border:0;border-radius:11px;font-size:12px;font-weight:900;cursor:pointer;}
+.schedule-save{background:#f28a24;color:#fff;}
+.schedule-delete{background:#fff0f2;color:#cf6078;}
+.schedule-cancel{background:#edf3f9;color:#60758e;}
+
 
 .day.empty{
   background:transparent;
@@ -1777,6 +1862,34 @@ border-radius:9px;
 </div>
 
 
+<div class="schedule-modal" id="scheduleModal" onclick="closeScheduleModal(event)">
+  <div class="schedule-panel" onclick="event.stopPropagation()">
+    <div class="schedule-head">
+      <div>
+        <div class="schedule-title">🏀 MY SCHEDULE</div>
+        <div class="schedule-date" id="scheduleModalDate"></div>
+      </div>
+      <button class="schedule-close" type="button" onclick="closeScheduleModal()">×</button>
+    </div>
+
+    <div class="schedule-list" id="scheduleList"></div>
+
+    <div class="schedule-form">
+      <div class="schedule-form-title" id="scheduleFormTitle">내 일정 추가</div>
+      <input type="text" id="scheduleName" maxlength="40" placeholder="일정 제목 *">
+      <input type="time" id="scheduleTime">
+      <input type="text" id="schedulePlace" maxlength="60" placeholder="장소">
+      <textarea id="scheduleMemo" maxlength="300" placeholder="메모"></textarea>
+      <div class="schedule-actions">
+        <button class="schedule-save" type="button" onclick="savePersonalSchedule()">저장</button>
+        <button class="schedule-delete" id="scheduleDeleteBtn" type="button" onclick="deletePersonalSchedule()" style="display:none;">삭제</button>
+        <button class="schedule-cancel" type="button" onclick="resetScheduleForm()">초기화</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1806,6 +1919,163 @@ const supabaseClient =
 
 
 let currentUser=null;
+
+let personalSchedules={};
+let selectedScheduleDate="";
+let editingScheduleId="";
+
+function getPersonalSchedulesFromUser(user){
+  const saved=user?.user_metadata?.personal_schedules;
+  return saved && typeof saved==="object" && !Array.isArray(saved)
+    ? saved
+    : {};
+}
+
+function formatScheduleDate(dateString){
+  const date=new Date(dateString+"T00:00:00");
+  const weekdays=["일","월","화","수","목","금","토"];
+  return `${date.getFullYear()}년 ${date.getMonth()+1}월 ${date.getDate()}일 ${weekdays[date.getDay()]}요일`;
+}
+
+function openScheduleModal(dateString){
+  if(!currentUser){
+    alert("로그인 후 내 일정을 저장할 수 있어요 🏀");
+    return;
+  }
+
+  selectedScheduleDate=dateString;
+  resetScheduleForm();
+  document.getElementById("scheduleModalDate").innerText=formatScheduleDate(dateString);
+  renderScheduleList();
+  document.getElementById("scheduleModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeScheduleModal(event){
+  if(event && event.target!==document.getElementById("scheduleModal")) return;
+  document.getElementById("scheduleModal").classList.remove("open");
+  document.body.style.overflow="";
+}
+
+function renderScheduleList(){
+  const list=document.getElementById("scheduleList");
+  const schedules=personalSchedules[selectedScheduleDate] || [];
+
+  if(!schedules.length){
+    list.innerHTML='<div class="schedule-empty">저장된 내 일정이 없어요.</div>';
+    return;
+  }
+
+  list.innerHTML="";
+  schedules.forEach(schedule=>{
+    const card=document.createElement("div");
+    card.className="schedule-card";
+
+    const title=document.createElement("strong");
+    title.textContent=(schedule.time ? schedule.time+" · " : "")+schedule.title;
+    card.appendChild(title);
+
+    const details=[schedule.place ? "📍 "+schedule.place : "",schedule.memo || ""]
+      .filter(Boolean).join("\n");
+    if(details){
+      const info=document.createElement("span");
+      info.textContent=details;
+      card.appendChild(info);
+    }
+
+    card.onclick=()=>editPersonalSchedule(schedule.id);
+    list.appendChild(card);
+  });
+}
+
+function resetScheduleForm(){
+  editingScheduleId="";
+  document.getElementById("scheduleFormTitle").innerText="내 일정 추가";
+  document.getElementById("scheduleName").value="";
+  document.getElementById("scheduleTime").value="";
+  document.getElementById("schedulePlace").value="";
+  document.getElementById("scheduleMemo").value="";
+  document.getElementById("scheduleDeleteBtn").style.display="none";
+}
+
+function editPersonalSchedule(id){
+  const schedule=(personalSchedules[selectedScheduleDate] || [])
+    .find(item=>item.id===id);
+  if(!schedule) return;
+
+  editingScheduleId=id;
+  document.getElementById("scheduleFormTitle").innerText="내 일정 수정";
+  document.getElementById("scheduleName").value=schedule.title || "";
+  document.getElementById("scheduleTime").value=schedule.time || "";
+  document.getElementById("schedulePlace").value=schedule.place || "";
+  document.getElementById("scheduleMemo").value=schedule.memo || "";
+  document.getElementById("scheduleDeleteBtn").style.display="block";
+  document.getElementById("scheduleName").focus();
+}
+
+async function syncPersonalSchedules(message){
+  const {data,error}=await supabaseClient.auth.updateUser({
+    data:{personal_schedules:personalSchedules}
+  });
+
+  if(error){
+    console.error(error);
+    alert(message);
+    personalSchedules=getPersonalSchedulesFromUser(currentUser);
+    renderCalendar();
+    renderScheduleList();
+    return false;
+  }
+
+  currentUser=data.user;
+  return true;
+}
+
+async function savePersonalSchedule(){
+  const title=document.getElementById("scheduleName").value.trim();
+  if(!title){
+    alert("일정 제목을 입력해주세요.");
+    document.getElementById("scheduleName").focus();
+    return;
+  }
+
+  const schedules=[...(personalSchedules[selectedScheduleDate] || [])];
+  const schedule={
+    id:editingScheduleId || (Date.now().toString(36)+Math.random().toString(36).slice(2,7)),
+    title,
+    time:document.getElementById("scheduleTime").value,
+    place:document.getElementById("schedulePlace").value.trim(),
+    memo:document.getElementById("scheduleMemo").value.trim()
+  };
+
+  const index=schedules.findIndex(item=>item.id===schedule.id);
+  if(index>=0) schedules[index]=schedule;
+  else schedules.push(schedule);
+
+  personalSchedules={...personalSchedules,[selectedScheduleDate]:schedules};
+  if(!await syncPersonalSchedules("내 일정 저장에 실패했어요.")) return;
+
+  resetScheduleForm();
+  renderScheduleList();
+  renderCalendar();
+}
+
+async function deletePersonalSchedule(){
+  if(!editingScheduleId || !confirm("이 일정을 삭제할까요?")) return;
+
+  const schedules=(personalSchedules[selectedScheduleDate] || [])
+    .filter(item=>item.id!==editingScheduleId);
+  const updated={...personalSchedules};
+  if(schedules.length) updated[selectedScheduleDate]=schedules;
+  else delete updated[selectedScheduleDate];
+  personalSchedules=updated;
+
+  if(!await syncPersonalSchedules("내 일정 삭제에 실패했어요.")) return;
+
+  resetScheduleForm();
+  renderScheduleList();
+  renderCalendar();
+}
 
 
 
@@ -3069,6 +3339,22 @@ function renderCalendar(){
         g=>g.date===dateString
       );
 
+    cell.onclick=()=>{
+      if(game){
+        showGame(game);
+      }
+      else{
+        openScheduleModal(dateString);
+      }
+    };
+
+    if(currentUser){
+      cell.style.cursor="pointer";
+      cell.title=game
+        ? "경기 보기 · 내 일정은 하트 농구공을 눌러주세요"
+        : "내 일정 추가";
+    }
+
 
     if(game){
 
@@ -3270,14 +3556,22 @@ function renderCalendar(){
         }
 
 
-        cell.onclick=()=>{
-
-          showGame(game);
-
-        };
-
       }
 
+    }
+
+    if(currentUser && (personalSchedules[dateString] || []).length){
+      const scheduleIcon=document.createElement("button");
+      scheduleIcon.type="button";
+      scheduleIcon.className="my-schedule-icon";
+      scheduleIcon.setAttribute("aria-label",`${dateString} 내 일정 보기`);
+      scheduleIcon.title="내 일정 보기";
+      scheduleIcon.innerHTML='<img src="data:image/png;base64,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" alt="">';
+      scheduleIcon.onclick=event=>{
+        event.stopPropagation();
+        openScheduleModal(dateString);
+      };
+      cell.appendChild(scheduleIcon);
     }
 
 
@@ -3635,6 +3929,13 @@ setAttendance(
       ${attendanceHTML}
 
     </div>
+
+    <button
+      class="personal-schedule-btn"
+      type="button"
+      onclick="openScheduleModal('${game.date}')">
+      🏀 내 일정 추가 · 보기
+    </button>
 
   `;
 
@@ -4126,6 +4427,9 @@ supabaseClient
       currentUser=
         session?.user || null;
 
+      personalSchedules=
+        getPersonalSchedulesFromUser(currentUser);
+
 
       updateLoginUI(
         currentUser
@@ -4169,6 +4473,9 @@ async function startApp(){
 
   currentUser=
     data.session?.user || null;
+
+  personalSchedules=
+    getPersonalSchedulesFromUser(currentUser);
 
 
   updateLoginUI(
