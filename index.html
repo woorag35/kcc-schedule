@@ -897,6 +897,7 @@ border-radius:9px;
 .schedule-card strong{display:block;color:#b95d10;font-size:13px;}
 .schedule-card span{display:block;margin-top:5px;color:#738196;font-size:11px;line-height:1.5;white-space:pre-wrap;}
 .schedule-empty{padding:13px;border-radius:12px;background:#f5f8fb;color:#8492a3;font-size:11px;text-align:center;}
+.schedule-add-btn{display:none;width:100%;margin-bottom:2px;padding:12px;border:1px solid #efaa66;border-radius:12px;background:#fff7ed;color:#cf7018;font-size:12px;font-weight:950;cursor:pointer;}
 .schedule-form{display:grid;gap:9px;padding-top:13px;border-top:1px solid #e9eef4;}
 .schedule-form-title{font-size:12px;font-weight:950;color:#385b80;}
 .schedule-type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
@@ -1887,7 +1888,9 @@ border-radius:9px;
 
     <div class="schedule-list" id="scheduleList"></div>
 
-    <div class="schedule-form">
+    <button class="schedule-add-btn" id="scheduleAddBtn" type="button" onclick="showScheduleForm()">＋ 일정 추가</button>
+
+    <div class="schedule-form" id="scheduleForm">
       <div class="schedule-form-title" id="scheduleFormTitle">내 일정 추가</div>
       <div class="schedule-type-tabs">
         <button class="schedule-type-tab active" id="scheduleTypePlan" type="button" onclick="selectScheduleType('PLAN')">📝 일정</button>
@@ -1981,6 +1984,7 @@ function openScheduleModal(dateString){
   resetScheduleForm();
   document.getElementById("scheduleModalDate").innerText=formatScheduleDate(dateString);
   renderScheduleList();
+  setScheduleFormVisibility(!(personalSchedules[dateString] || []).length);
   document.getElementById("scheduleModal").classList.add("open");
   document.body.style.overflow="hidden";
 }
@@ -2034,6 +2038,17 @@ function resetScheduleForm(){
   document.getElementById("scheduleDeleteBtn").style.display="none";
 }
 
+function setScheduleFormVisibility(show){
+  document.getElementById("scheduleForm").style.display=show ? "grid" : "none";
+  document.getElementById("scheduleAddBtn").style.display=show ? "none" : "block";
+}
+
+function showScheduleForm(){
+  resetScheduleForm();
+  setScheduleFormVisibility(true);
+  document.getElementById("scheduleName").focus();
+}
+
 function selectScheduleType(type){
   selectedScheduleType=type;
   document.getElementById("scheduleTypePlan")?.classList.toggle("active",type==="PLAN");
@@ -2054,6 +2069,7 @@ function editPersonalSchedule(id){
     .find(item=>item.id===id);
   if(!schedule) return;
 
+  setScheduleFormVisibility(true);
   editingScheduleId=id;
   selectScheduleType(schedule.type || "PLAN");
   selectScheduleEmoji(schedule.emoji || "📝");
@@ -2112,6 +2128,7 @@ async function savePersonalSchedule(){
   resetScheduleForm();
   renderScheduleList();
   renderCalendar();
+  setScheduleFormVisibility(false);
 }
 
 async function deletePersonalSchedule(){
@@ -2129,6 +2146,7 @@ async function deletePersonalSchedule(){
   resetScheduleForm();
   renderScheduleList();
   renderCalendar();
+  setScheduleFormVisibility(!(personalSchedules[selectedScheduleDate] || []).length);
 }
 
 
