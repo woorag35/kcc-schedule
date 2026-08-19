@@ -35,6 +35,10 @@
   --orange:#f28a24;
   --orange-soft:#fff1df;
 
+  --mint:#79b9aa;
+  --mint-dark:#579688;
+  --mint-soft:#e9f6f2;
+
   --green:#59a77c;
 
   --text:#263d59;
@@ -252,6 +256,11 @@ header h1{
 .next-badge.open{
   background:var(--orange);
   color:white;
+}
+
+.next-badge.easl{
+  background:var(--mint-soft);
+  color:var(--mint-dark);
 }
 
 
@@ -658,6 +667,11 @@ border-radius:9px;
   color:#dc7f23;
 }
 
+.filter-easl{
+  background:var(--mint-soft);
+  color:var(--mint-dark);
+}
+
 
 .filter-all.active{
   background:#50647d;
@@ -686,6 +700,13 @@ border-radius:9px;
   color:white;
 
   border-color:#dc7314;
+}
+
+.filter-easl.active{
+  background:var(--mint);
+  color:white;
+
+  border-color:var(--mint-dark);
 }
 
 
@@ -881,6 +902,25 @@ border-radius:9px;
     inset 0 0 0 1px #f3c88d;
 }
 
+/* EASL */
+
+.game-day.easl{
+  background:var(--mint-soft);
+
+  color:var(--mint-dark);
+
+  box-shadow:
+    inset 0 0 0 1px #bfe3da;
+}
+
+.game-day.easl .game-team{
+  color:#4f887c;
+}
+
+.game-day.easl .game-time{
+  color:#68a296;
+}
+
 
 .game-team{
   position:absolute;
@@ -922,6 +962,17 @@ border-radius:9px;
   margin-bottom:2px;
 
   color:#df7f20;
+
+  font-size:6px;
+  font-weight:950;
+}
+
+.easl-label{
+  display:block;
+
+  margin-bottom:2px;
+
+  color:var(--mint-dark);
 
   font-size:6px;
   font-weight:950;
@@ -996,6 +1047,10 @@ border-radius:9px;
   background:var(--orange);
 }
 
+.easl-dot{
+  background:var(--mint);
+}
+
 
 
 /* =========================
@@ -1052,6 +1107,10 @@ border-radius:9px;
 
 .detail-small.open{
   color:var(--orange);
+}
+
+.detail-small.easl{
+  color:var(--mint-dark);
 }
 
 
@@ -1542,6 +1601,12 @@ border-radius:9px;
       OPEN
     </button>
 
+    <button
+      class="filter filter-easl"
+      onclick="setFilter('EASL',this)">
+      EASL
+    </button>
+
   </div>
 
 
@@ -1591,6 +1656,11 @@ border-radius:9px;
     <span>
       <span class="dot open-dot"></span>
       OPEN
+    </span>
+
+    <span>
+      <span class="dot easl-dot"></span>
+      EASL
     </span>
 
   </div>
@@ -1674,6 +1744,66 @@ let currentUser=null;
 
 
 const games=[
+
+
+  {
+    date:"2026-10-14",
+    team:"나가사키 벨카",
+    time:"미정",
+    place:"나가사키",
+    type:"AWAY",
+    category:"EASL"
+  },
+
+
+  {
+    date:"2026-11-05",
+    team:"타이베이 푸본 브레이브스",
+    time:"미정",
+    place:"부산",
+    type:"HOME",
+    category:"EASL"
+  },
+
+
+  {
+    date:"2026-11-11",
+    team:"마카오 블랙 베어스",
+    time:"미정",
+    place:"부산",
+    type:"HOME",
+    category:"EASL"
+  },
+
+
+  {
+    date:"2026-12-29",
+    team:"마카오 블랙 베어스",
+    time:"미정",
+    place:"마카오",
+    type:"AWAY",
+    category:"EASL"
+  },
+
+
+  {
+    date:"2027-01-13",
+    team:"나가사키 벨카",
+    time:"미정",
+    place:"부산",
+    type:"HOME",
+    category:"EASL"
+  },
+
+
+  {
+    date:"2027-01-27",
+    team:"타이베이 푸본 브레이브스",
+    time:"미정",
+    place:"타이베이",
+    type:"AWAY",
+    category:"EASL"
+  },
 
 
   {
@@ -2893,6 +3023,16 @@ function renderCalendar(){
       }
 
 
+      else if(
+        currentFilter==="EASL"
+      ){
+
+        visible=
+          game.category==="EASL";
+
+      }
+
+
       else{
 
         visible=
@@ -2903,6 +3043,11 @@ function renderCalendar(){
           &&
 
           game.category!=="OPEN";
+
+        visible=
+          visible
+          &&
+          game.category!=="EASL";
 
       }
 
@@ -2921,6 +3066,17 @@ function renderCalendar(){
           cell
             .classList
             .add("open");
+
+        }
+
+
+        else if(
+          game.category==="EASL"
+        ){
+
+          cell
+            .classList
+            .add("easl");
 
         }
 
@@ -2962,6 +3118,14 @@ function renderCalendar(){
             ?
 
             '<span class="open-label">OPEN</span>'
+
+            :
+
+            game.category==="EASL"
+
+            ?
+
+            '<span class="easl-label">EASL · '+game.type+'</span>'
 
             :
 
@@ -3170,6 +3334,19 @@ function showGame(game){
 
     labelClass=
       "open";
+
+  }
+
+
+  else if(
+    game.category==="EASL"
+  ){
+
+    label=
+      "EASL · "+game.type;
+
+    labelClass=
+      "easl";
 
   }
 
@@ -3748,6 +3925,15 @@ function renderNextGame(){
 
 
   else if(
+    next.category==="EASL"
+  ){
+
+    badgeClass="easl";
+
+  }
+
+
+  else if(
     next.type==="AWAY"
   ){
 
@@ -3763,6 +3949,14 @@ function renderNextGame(){
       ?
 
       "OPEN MATCH"
+
+      :
+
+      next.category==="EASL"
+
+      ?
+
+      "EASL · "+next.type
 
       :
 
