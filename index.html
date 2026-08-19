@@ -1892,7 +1892,6 @@ border-radius:9px;
       </div>
       <input type="text" id="scheduleName" maxlength="40" placeholder="일정 제목 *">
       <input type="text" id="scheduleTime" placeholder="시간" inputmode="none" onfocus="this.type='time'" onblur="if(!this.value)this.type='text'">
-      <input type="text" id="schedulePlace" maxlength="60" placeholder="장소">
       <textarea id="scheduleMemo" maxlength="300" placeholder="메모"></textarea>
       <div class="schedule-actions">
         <button class="schedule-save" type="button" onclick="savePersonalSchedule()">저장</button>
@@ -1991,8 +1990,7 @@ function renderScheduleList(){
       +(schedule.time ? schedule.time+" · " : "")+schedule.title;
     card.appendChild(title);
 
-    const details=[schedule.place ? "📍 "+schedule.place : "",schedule.memo || ""]
-      .filter(Boolean).join("\n");
+    const details=schedule.memo || "";
     if(details){
       const info=document.createElement("span");
       info.textContent=details;
@@ -2011,7 +2009,6 @@ function resetScheduleForm(){
   document.getElementById("scheduleName").value="";
   document.getElementById("scheduleTime").value="";
   document.getElementById("scheduleTime").type="text";
-  document.getElementById("schedulePlace").value="";
   document.getElementById("scheduleMemo").value="";
   document.getElementById("scheduleDeleteBtn").style.display="none";
 }
@@ -2033,7 +2030,6 @@ function editPersonalSchedule(id){
   document.getElementById("scheduleName").value=schedule.title || "";
   document.getElementById("scheduleTime").type=schedule.time ? "time" : "text";
   document.getElementById("scheduleTime").value=schedule.time || "";
-  document.getElementById("schedulePlace").value=schedule.place || "";
   document.getElementById("scheduleMemo").value=schedule.memo || "";
   document.getElementById("scheduleDeleteBtn").style.display="block";
   document.getElementById("scheduleName").focus();
@@ -2071,7 +2067,6 @@ async function savePersonalSchedule(){
     title,
     type:selectedScheduleType,
     time:document.getElementById("scheduleTime").value,
-    place:document.getElementById("schedulePlace").value.trim(),
     memo:document.getElementById("scheduleMemo").value.trim()
   };
 
