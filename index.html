@@ -956,13 +956,11 @@ border-radius:9px;
 .schedule-add-btn{display:none;width:100%;margin-bottom:2px;padding:12px;border:1px solid #efaa66;border-radius:12px;background:#fff7ed;color:#cf7018;font-size:12px;font-weight:950;cursor:pointer;}
 .schedule-form{display:grid;gap:9px;padding-top:13px;border-top:1px solid #e9eef4;}
 .schedule-form-title{font-size:12px;font-weight:950;color:#385b80;}
-.schedule-type-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.schedule-type-tab{padding:10px;border:1px solid #dce6ef;border-radius:11px;background:#f7f9fb;color:#76879a;font-size:12px;font-weight:900;cursor:pointer;}
-.schedule-type-tab.active{border-color:#efaa66;background:#fff3e7;color:#cf7018;box-shadow:inset 0 0 0 1px #efaa66;}
-.schedule-emoji-input-wrap{display:flex;align-items:center;gap:9px;}
-.schedule-emoji-input-label{flex:0 0 auto;color:#60758e;font-size:11px;font-weight:900;}
-.schedule-form input.schedule-emoji-input{width:74px;padding:8px 10px;text-align:center;font-size:23px;line-height:1.2;}
-.schedule-emoji-help{flex:1;color:#9aa6b4;font-size:9px;line-height:1.4;}
+.schedule-emoji-input-wrap{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px;}
+.schedule-emoji-input-label{grid-column:1 / -1;color:#60758e;font-size:11px;font-weight:900;}
+.schedule-form input.schedule-emoji-input{width:72px;height:46px;padding:7px 8px;text-align:center;font-size:22px;line-height:1.2;}
+.schedule-form input.schedule-emoji-input::placeholder{color:#bcc7d2;font-size:17px;}
+.schedule-emoji-help{color:#9aa6b4;font-size:9px;line-height:1.4;}
 .schedule-form input,.schedule-form textarea{width:100%;padding:11px 12px;border:1px solid #d9e3ed;border-radius:11px;background:#fbfdff;color:#263d59;font-family:inherit;font-size:16px;outline:none;}
 .schedule-form input[type="time"]{
   display:block;
@@ -1949,14 +1947,10 @@ border-radius:9px;
 
     <div class="schedule-form" id="scheduleForm">
       <div class="schedule-form-title" id="scheduleFormTitle">내 일정 추가</div>
-      <div class="schedule-type-tabs">
-        <button class="schedule-type-tab active" id="scheduleTypePlan" type="button" onclick="selectScheduleType('PLAN')">📝 일정</button>
-        <button class="schedule-type-tab" id="scheduleTypeTicket" type="button" onclick="selectScheduleType('TICKET')">🎟️ 티켓팅</button>
-      </div>
       <div class="schedule-emoji-input-wrap" id="scheduleEmojiPicker">
-        <span class="schedule-emoji-input-label">아이콘</span>
-        <input class="schedule-emoji-input" type="text" id="scheduleEmojiInput" value="📝" placeholder="🙂" autocomplete="off" oninput="selectedEmoji=this.value" onblur="applyScheduleEmojiInput()">
-        <span class="schedule-emoji-help">키보드에서 원하는 이모지를 골라주세요</span>
+        <span class="schedule-emoji-input-label">아이콘 <span style="font-weight:700;color:#a7b2bf;">(선택)</span></span>
+        <input class="schedule-emoji-input" type="text" id="scheduleEmojiInput" value="" placeholder="＋" maxlength="8" autocomplete="off" inputmode="text" oninput="selectedEmoji=this.value" onblur="applyScheduleEmojiInput()">
+        <span class="schedule-emoji-help">원하면 이 칸을 눌러 키보드에서 이모지를 입력하세요. 비워둬도 돼요.</span>
       </div>
       <input type="text" id="scheduleName" maxlength="40" placeholder="일정 제목 *">
       <input type="text" id="scheduleTime" placeholder="시간" inputmode="none" onfocus="this.type='time'" onblur="if(!this.value)this.type='text'">
@@ -2005,7 +1999,7 @@ let personalSchedules={};
 let selectedScheduleDate="";
 let editingScheduleId="";
 let selectedScheduleType="PLAN";
-let selectedEmoji="📝";
+let selectedEmoji="";
 
 function getPersonalSchedulesFromUser(user){
   const saved=user?.user_metadata?.personal_schedules;
@@ -2056,7 +2050,7 @@ function renderScheduleList(){
     card.className="schedule-card";
 
     const title=document.createElement("strong");
-    title.textContent=(schedule.type==="TICKET" ? "🎟️ " : (schedule.emoji || "📝")+" ")
+    title.textContent=((schedule.emoji || "") ? (schedule.emoji+" ") : "")
       +(schedule.time ? schedule.time+" · " : "")+schedule.title;
     card.appendChild(title);
 
@@ -2074,8 +2068,8 @@ function renderScheduleList(){
 
 function resetScheduleForm(){
   editingScheduleId="";
-  selectScheduleType("PLAN");
-  selectScheduleEmoji("📝");
+  selectedScheduleType="PLAN";
+  selectScheduleEmoji("");
   document.getElementById("scheduleFormTitle").innerText="내 일정 추가";
   document.getElementById("scheduleName").value="";
   document.getElementById("scheduleTime").value="";
@@ -2095,27 +2089,19 @@ function showScheduleForm(){
   document.getElementById("scheduleName").focus();
 }
 
-function selectScheduleType(type){
-  selectedScheduleType=type;
-  document.getElementById("scheduleTypePlan")?.classList.toggle("active",type==="PLAN");
-  document.getElementById("scheduleTypeTicket")?.classList.toggle("active",type==="TICKET");
-  const picker=document.getElementById("scheduleEmojiPicker");
-  if(picker) picker.style.display=type==="PLAN" ? "grid" : "none";
-}
-
 function normalizeScheduleEmoji(value){
   const text=(value || "").trim();
-  if(!text) return "📝";
+  if(!text) return "";
 
   try{
     if(typeof Intl!=="undefined" && Intl.Segmenter){
       const segmenter=new Intl.Segmenter(undefined,{granularity:"grapheme"});
       const first=[...segmenter.segment(text)][0];
-      return first?.segment || "📝";
+      return first?.segment || "";
     }
   }catch(e){}
 
-  return Array.from(text)[0] || "📝";
+  return Array.from(text)[0] || "";
 }
 
 function applyScheduleEmojiInput(){
@@ -2138,8 +2124,8 @@ function editPersonalSchedule(id){
 
   setScheduleFormVisibility(true);
   editingScheduleId=id;
-  selectScheduleType(schedule.type || "PLAN");
-  selectScheduleEmoji(schedule.emoji || "📝");
+  selectedScheduleType="PLAN";
+  selectScheduleEmoji(schedule.emoji || (schedule.type==="TICKET" ? "🎟️" : ""));
   document.getElementById("scheduleFormTitle").innerText="내 일정 수정";
   document.getElementById("scheduleName").value=schedule.title || "";
   document.getElementById("scheduleTime").type=schedule.time ? "time" : "text";
@@ -2179,8 +2165,8 @@ async function savePersonalSchedule(){
   const schedule={
     id:editingScheduleId || (Date.now().toString(36)+Math.random().toString(36).slice(2,7)),
     title,
-    type:selectedScheduleType,
-    emoji:selectedScheduleType==="TICKET" ? "🎟️" : normalizeScheduleEmoji(document.getElementById("scheduleEmojiInput")?.value || selectedEmoji),
+    type:"PLAN",
+    emoji:normalizeScheduleEmoji(document.getElementById("scheduleEmojiInput")?.value || selectedEmoji),
     time:document.getElementById("scheduleTime").value,
     memo:document.getElementById("scheduleMemo").value.trim()
   };
@@ -3702,18 +3688,20 @@ function renderCalendar(){
     if(currentUser && (personalSchedules[dateString] || []).length){
       const schedules=personalSchedules[dateString];
       const first=schedules[0];
-      const emoji=first.type==="TICKET" ? "🎟️" : (first.emoji || "📝");
+      const emoji=first.emoji || (first.type==="TICKET" ? "🎟️" : "");
 
-      const scheduleIcon=document.createElement("button");
-      scheduleIcon.type="button";
-      scheduleIcon.className="my-schedule-icon";
-      scheduleIcon.textContent=emoji;
-      scheduleIcon.setAttribute("aria-label",`${dateString} 내 일정 보기`);
-      scheduleIcon.onclick=event=>{
-        event.stopPropagation();
-        openScheduleModal(dateString);
-      };
-      cell.appendChild(scheduleIcon);
+      if(emoji){
+        const scheduleIcon=document.createElement("button");
+        scheduleIcon.type="button";
+        scheduleIcon.className="my-schedule-icon";
+        scheduleIcon.textContent=emoji;
+        scheduleIcon.setAttribute("aria-label",`${dateString} 내 일정 보기`);
+        scheduleIcon.onclick=event=>{
+          event.stopPropagation();
+          openScheduleModal(dateString);
+        };
+        cell.appendChild(scheduleIcon);
+      }
 
       const scheduleTitle=document.createElement("button");
       scheduleTitle.type="button";
