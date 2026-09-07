@@ -831,26 +831,54 @@ border-radius:9px;
   right:4px;
   top:24px;
   z-index:3;
-  padding:0;
-  border:0;
-  background:transparent;
-  color:#66788d;
+  min-width:0;
+  padding:3px 5px;
+  border:1px solid rgba(111,159,209,.14);
+  border-radius:8px;
+  background:rgba(111,159,209,.11);
+  color:#5f738a;
   font-family:inherit;
   font-size:7px;
   font-weight:900;
-  line-height:1.25;
-  text-align:center;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  line-height:1.15;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
   cursor:pointer;
+  overflow:hidden;
 }
 
-/* 경기 카드 위에서도 개인 일정 제목이 자연스럽게 보이도록 */
+.my-schedule-title .schedule-mini-icon{
+  flex:0 0 auto;
+  font-size:8px;
+  line-height:1;
+}
+
+.my-schedule-title .schedule-mini-text{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.my-schedule-title .schedule-more{
+  flex:0 0 auto;
+  font-size:6px;
+  opacity:.72;
+}
+
+/* 일정 아이콘별 아주 연한 배경 */
+.my-schedule-title.tone-blue{background:rgba(111,159,209,.12);border-color:rgba(111,159,209,.18);color:#55728f;}
+.my-schedule-title.tone-pink{background:rgba(238,176,193,.16);border-color:rgba(238,176,193,.22);color:#b96982;}
+.my-schedule-title.tone-orange{background:rgba(242,138,36,.13);border-color:rgba(242,138,36,.19);color:#bd711f;}
+.my-schedule-title.tone-mint{background:rgba(121,185,170,.14);border-color:rgba(121,185,170,.20);color:#579688;}
+.my-schedule-title.tone-purple{background:rgba(174,151,210,.14);border-color:rgba(174,151,210,.20);color:#7c67a4;}
+.my-schedule-title.tone-gray{background:rgba(125,137,152,.10);border-color:rgba(125,137,152,.15);color:#66788d;}
+
+/* 경기 있는 날은 날짜 아래에 작게, 경기 정보는 그대로 유지 */
 .game-day .my-schedule-title{
-  top:20px;
-  color:inherit;
-  opacity:.9;
+  top:19px;
 }
 
 .personal-schedule-btn{
@@ -3643,14 +3671,49 @@ function renderCalendar(){
 
     if(currentUser && (personalSchedules[dateString] || []).length){
       const schedules=personalSchedules[dateString];
+      const first=schedules[0];
+      const emoji=first.type==="TICKET" ? "🎟️" : (first.emoji || "📝");
+
+      const toneMap={
+        "🏀":"tone-blue",
+        "✈️":"tone-blue",
+        "💧":"tone-blue",
+        "📸":"tone-pink",
+        "🎁":"tone-pink",
+        "💓":"tone-pink",
+        "🚗":"tone-mint",
+        "🍀":"tone-mint",
+        "🍽️":"tone-orange",
+        "☕":"tone-orange",
+        "💰":"tone-orange",
+        "🎟️":"tone-purple",
+        "🏨":"tone-purple",
+        "🎉":"tone-purple",
+        "📝":"tone-gray"
+      };
+
       const scheduleTitle=document.createElement("button");
       scheduleTitle.type="button";
-      scheduleTitle.className="my-schedule-title";
+      scheduleTitle.className=`my-schedule-title ${toneMap[emoji] || "tone-gray"}`;
       scheduleTitle.setAttribute("aria-label",`${dateString} 내 일정 보기`);
       scheduleTitle.title=schedules.map(item=>item.title).join(" · ");
 
-      // 달력에는 아이콘/시간/메모 없이 '제목만' 표시
-      scheduleTitle.textContent=schedules.map(item=>item.title).join(" · ");
+      const icon=document.createElement("span");
+      icon.className="schedule-mini-icon";
+      icon.textContent=emoji;
+      scheduleTitle.appendChild(icon);
+
+      const text=document.createElement("span");
+      text.className="schedule-mini-text";
+      text.textContent=first.title;
+      scheduleTitle.appendChild(text);
+
+      if(schedules.length>1){
+        const more=document.createElement("span");
+        more.className="schedule-more";
+        more.textContent=`+${schedules.length-1}`;
+        scheduleTitle.appendChild(more);
+      }
 
       scheduleTitle.onclick=event=>{
         event.stopPropagation();
