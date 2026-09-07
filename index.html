@@ -825,60 +825,79 @@ border-radius:9px;
   font-size:10px;
 }
 
+/* 내 일정: 날짜 숫자 옆 아이콘 + 아래 제목/시간 (배경 없음) */
+.my-schedule-icon{
+  position:absolute;
+  top:4px;
+  left:20px;
+  z-index:4;
+  border:0;
+  padding:0;
+  background:transparent;
+  font-family:inherit;
+  font-size:10px;
+  line-height:12px;
+  cursor:pointer;
+}
+
 .my-schedule-title{
   position:absolute;
   left:4px;
   right:4px;
-  top:24px;
+  top:23px;
   z-index:3;
   min-width:0;
-  padding:3px 5px;
-  border:1px solid rgba(111,159,209,.14);
-  border-radius:8px;
-  background:rgba(111,159,209,.11);
+  padding:0;
+  border:0;
+  background:transparent;
   color:#5f738a;
   font-family:inherit;
-  font-size:7px;
-  font-weight:900;
-  line-height:1.15;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:2px;
+  text-align:center;
   cursor:pointer;
   overflow:hidden;
 }
 
-.my-schedule-title .schedule-mini-icon{
-  flex:0 0 auto;
-  font-size:8px;
-  line-height:1;
-}
-
 .my-schedule-title .schedule-mini-text{
-  min-width:0;
+  display:block;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
+  font-size:7px;
+  font-weight:900;
+  line-height:1.15;
+}
+
+.my-schedule-title .schedule-mini-time{
+  display:block;
+  margin-top:2px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#8a98a8;
+  font-size:6px;
+  font-weight:800;
+  line-height:1.1;
 }
 
 .my-schedule-title .schedule-more{
-  flex:0 0 auto;
+  display:inline-block;
+  margin-left:2px;
   font-size:6px;
   opacity:.72;
 }
 
-/* 일정 아이콘별 아주 연한 배경 */
-.my-schedule-title.tone-blue{background:rgba(111,159,209,.12);border-color:rgba(111,159,209,.18);color:#55728f;}
-.my-schedule-title.tone-pink{background:rgba(238,176,193,.16);border-color:rgba(238,176,193,.22);color:#b96982;}
-.my-schedule-title.tone-orange{background:rgba(242,138,36,.13);border-color:rgba(242,138,36,.19);color:#bd711f;}
-.my-schedule-title.tone-mint{background:rgba(121,185,170,.14);border-color:rgba(121,185,170,.20);color:#579688;}
-.my-schedule-title.tone-purple{background:rgba(174,151,210,.14);border-color:rgba(174,151,210,.20);color:#7c67a4;}
-.my-schedule-title.tone-gray{background:rgba(125,137,152,.10);border-color:rgba(125,137,152,.15);color:#66788d;}
-
-/* 경기 있는 날은 날짜 아래에 작게, 경기 정보는 그대로 유지 */
+/* 경기 있는 날에도 경기 정보와 겹치지 않게 위쪽에 배치 */
 .game-day .my-schedule-title{
-  top:19px;
+  top:18px;
+}
+
+.game-day .my-schedule-title .schedule-mini-text{
+  font-size:6px;
+}
+
+.game-day .my-schedule-title .schedule-mini-time{
+  margin-top:1px;
+  font-size:5.5px;
 }
 
 .personal-schedule-btn{
@@ -3674,45 +3693,40 @@ function renderCalendar(){
       const first=schedules[0];
       const emoji=first.type==="TICKET" ? "🎟️" : (first.emoji || "📝");
 
-      const toneMap={
-        "🏀":"tone-blue",
-        "✈️":"tone-blue",
-        "💧":"tone-blue",
-        "📸":"tone-pink",
-        "🎁":"tone-pink",
-        "💓":"tone-pink",
-        "🚗":"tone-mint",
-        "🍀":"tone-mint",
-        "🍽️":"tone-orange",
-        "☕":"tone-orange",
-        "💰":"tone-orange",
-        "🎟️":"tone-purple",
-        "🏨":"tone-purple",
-        "🎉":"tone-purple",
-        "📝":"tone-gray"
+      const scheduleIcon=document.createElement("button");
+      scheduleIcon.type="button";
+      scheduleIcon.className="my-schedule-icon";
+      scheduleIcon.textContent=emoji;
+      scheduleIcon.setAttribute("aria-label",`${dateString} 내 일정 보기`);
+      scheduleIcon.onclick=event=>{
+        event.stopPropagation();
+        openScheduleModal(dateString);
       };
+      cell.appendChild(scheduleIcon);
 
       const scheduleTitle=document.createElement("button");
       scheduleTitle.type="button";
-      scheduleTitle.className=`my-schedule-title ${toneMap[emoji] || "tone-gray"}`;
+      scheduleTitle.className="my-schedule-title";
       scheduleTitle.setAttribute("aria-label",`${dateString} 내 일정 보기`);
       scheduleTitle.title=schedules.map(item=>item.title).join(" · ");
-
-      const icon=document.createElement("span");
-      icon.className="schedule-mini-icon";
-      icon.textContent=emoji;
-      scheduleTitle.appendChild(icon);
 
       const text=document.createElement("span");
       text.className="schedule-mini-text";
       text.textContent=first.title;
-      scheduleTitle.appendChild(text);
 
       if(schedules.length>1){
         const more=document.createElement("span");
         more.className="schedule-more";
         more.textContent=`+${schedules.length-1}`;
-        scheduleTitle.appendChild(more);
+        text.appendChild(more);
+      }
+      scheduleTitle.appendChild(text);
+
+      if(first.time){
+        const time=document.createElement("span");
+        time.className="schedule-mini-time";
+        time.textContent=first.time;
+        scheduleTitle.appendChild(time);
       }
 
       scheduleTitle.onclick=event=>{
