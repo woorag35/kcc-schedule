@@ -825,23 +825,32 @@ border-radius:9px;
   font-size:10px;
 }
 
-.my-schedule-icon{
+.my-schedule-title{
   position:absolute;
+  left:4px;
   right:4px;
-  top:4px;
-  min-width:18px;
-  height:18px;
+  top:24px;
+  z-index:3;
   padding:0;
   border:0;
   background:transparent;
-  cursor:pointer;
-  z-index:3;
-  color:inherit;
-  font-size:15px;
-  line-height:18px;
-  letter-spacing:-3px;
+  color:#66788d;
+  font-family:inherit;
+  font-size:7px;
+  font-weight:900;
+  line-height:1.25;
+  text-align:center;
   white-space:nowrap;
-  filter:drop-shadow(0 1px 1px rgba(65,43,28,.08));
+  overflow:hidden;
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+
+/* 경기 카드 위에서도 개인 일정 제목이 자연스럽게 보이도록 */
+.game-day .my-schedule-title{
+  top:20px;
+  color:inherit;
+  opacity:.9;
 }
 
 .personal-schedule-btn{
@@ -3633,22 +3642,21 @@ function renderCalendar(){
     }
 
     if(currentUser && (personalSchedules[dateString] || []).length){
-      const scheduleIcon=document.createElement("button");
-      scheduleIcon.type="button";
-      scheduleIcon.className="my-schedule-icon";
-      scheduleIcon.setAttribute("aria-label",`${dateString} 내 일정 보기`);
-      scheduleIcon.title="내 일정 보기";
-      const calendarEmojis=[...new Set(
-        personalSchedules[dateString].map(item=>
-          item.type==="TICKET" ? "🎟️" : (item.emoji || "📝")
-        )
-      )].slice(0,2);
-      scheduleIcon.textContent=calendarEmojis.join("");
-      scheduleIcon.onclick=event=>{
+      const schedules=personalSchedules[dateString];
+      const scheduleTitle=document.createElement("button");
+      scheduleTitle.type="button";
+      scheduleTitle.className="my-schedule-title";
+      scheduleTitle.setAttribute("aria-label",`${dateString} 내 일정 보기`);
+      scheduleTitle.title=schedules.map(item=>item.title).join(" · ");
+
+      // 달력에는 아이콘/시간/메모 없이 '제목만' 표시
+      scheduleTitle.textContent=schedules.map(item=>item.title).join(" · ");
+
+      scheduleTitle.onclick=event=>{
         event.stopPropagation();
         openScheduleModal(dateString);
       };
-      cell.appendChild(scheduleIcon);
+      cell.appendChild(scheduleTitle);
     }
 
 
