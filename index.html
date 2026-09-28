@@ -980,6 +980,14 @@ border-radius:9px;
 .schedule-cancel{background:#edf3f9;color:#60758e;}
 
 
+
+/* 오늘 날짜 강조 */
+.day.today{
+  border:2px solid var(--navy);
+  box-shadow:0 0 0 2px rgba(24,63,114,.10);
+  padding:3px 2px;
+}
+
 .day.empty{
   background:transparent;
 }
@@ -3459,6 +3467,20 @@ function renderCalendar(){
         .padStart(2,"0");
 
 
+
+    // 오늘 날짜 자동 강조 (한국 시간 기준)
+    const seoulParts=new Intl.DateTimeFormat("en-CA",{
+      timeZone:"Asia/Seoul",
+      year:"numeric",
+      month:"2-digit",
+      day:"2-digit"
+    }).formatToParts(new Date());
+    const seoulDate=Object.fromEntries(seoulParts.map(p=>[p.type,p.value]));
+    const todayString=`${seoulDate.year}-${seoulDate.month}-${seoulDate.day}`;
+    if(dateString===todayString){
+      cell.classList.add("today");
+    }
+
     const game=
       games.find(
         g=>g.date===dateString
@@ -3668,11 +3690,11 @@ function renderCalendar(){
 
               ?
 
-              "🏆"
+              "😆"
 
               :
 
-              "💧";
+              "😔";
 
 
           cell
@@ -3930,11 +3952,11 @@ function showGame(game){
 
             ?
 
-            "🏆 직관 · 승리!"
+            "😆 직관 · 승리!"
 
             :
 
-            "🏀 직관 · 패배"
+            "😔 직관 · 패배"
         }
 
       </div>
@@ -4020,7 +4042,7 @@ setAttendance(
             )
           ">
 
-          직관 + 승리 🏆
+          직관 + 승리 😆
 
         </button>
 
@@ -4034,7 +4056,7 @@ setAttendance(
             )
           ">
 
-          직관 + 패배
+          직관 + 패배 😔
 
         </button>
 
